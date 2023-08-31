@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from "class-validator";
 
-export class parkingDto {
+export class ParkingDto {
     @IsNotEmpty()
     parking_id: number;
 
@@ -8,8 +8,10 @@ export class parkingDto {
     @IsNotEmpty()
     paking_name: string
 
+    @IsNotEmpty()
     parking_costpermi: number
-    
+
+    @IsNotEmpty()
     parking_total: number
 
     createat: Date

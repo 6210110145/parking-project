@@ -1,5 +1,6 @@
-import { BaseEntity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity('Parking')
 export class ParkingEntity extends BaseEntity{
     @PrimaryGeneratedColumn({
         type: 'bigint',
@@ -14,8 +15,20 @@ export class ParkingEntity extends BaseEntity{
     parking_name: string
 
     @Column({
-        name: 'total slots',
+        name: 'จำนวนช่องทั้งหมด',
         nullable: false
     })
     paparking_total: number
+
+    @Column({
+        name: 'ค่าจอด(บาท/30 นาที)',
+        nullable: false
+    })
+    parking_costpermi: number
+
+    @Column()
+    createat: Date
+
+    @Column()
+    updateat: Date
 }
