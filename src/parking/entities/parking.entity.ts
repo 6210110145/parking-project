@@ -1,7 +1,7 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('Parking')
-export class ParkingEntity extends BaseEntity{
+export class Parking extends BaseEntity{
     @PrimaryGeneratedColumn({
         type: 'bigint',
         name: 'parking_id'
@@ -18,7 +18,14 @@ export class ParkingEntity extends BaseEntity{
         name: 'จำนวนช่องทั้งหมด',
         nullable: false
     })
-    paparking_total: number
+    parking_total: number
+
+    @Column({
+        name: 'จำนวนช่องที่จอด',
+        default: 0,
+        nullable: false
+    })
+    parking_notEmpty: number
 
     @Column({
         name: 'ค่าจอด(บาท/30 นาที)',

@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { ParkingModule } from './parking/parking.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ParkingEntity } from './parking/parking.entity';
+import { GateModule } from './gate/gate.module';
 
 @Module({
   imports: [
@@ -18,13 +18,15 @@ import { ParkingEntity } from './parking/parking.entity';
         username: configService.get('POSTGRES_USERNAME'),
         password: configService.get('POSTGRES_PASSWORD'),
         database: configService.get('POSTGRES_DATABASE'),
-        entities: [ ParkingEntity ],
+        entities: [],
         autoLoadEntities: true,
-        synchronize: true
+        synchronize: true,
+        logging: true
       }),
       inject: [ConfigService],
     }),
-    ParkingModule
+    ParkingModule,
+    GateModule
   ],
   controllers: [AppController],
   providers: [AppService],

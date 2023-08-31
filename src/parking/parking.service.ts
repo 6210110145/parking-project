@@ -1,13 +1,13 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ParkingEntity } from './parking.entity';
+import { Parking } from './entities/parking.entity';
 import { Repository } from 'typeorm';
-import { ParkingDto } from './parking.dto/parking.dto';
+import { ParkingDto } from './parking.dto/create-parking.dto';
 
 @Injectable()
 export class ParkingService {
-    constructor(@InjectRepository(ParkingEntity)
-    private parkingReplository: Repository<ParkingEntity>) {}
+    constructor(@InjectRepository(Parking)
+    private parkingReplository: Repository<Parking>) {}
 
     createParking(parkingDto: ParkingDto) {
         const newParking = this.parkingReplository.create(parkingDto)
