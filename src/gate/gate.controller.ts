@@ -9,7 +9,7 @@ export class GateController {
 
   @Post()
   create(@Body() createGateDto: CreateGateDto) {
-    return this.gateService.create(createGateDto);
+    return this.gateService.createGate(createGateDto);
   }
 
   @Delete(':id')

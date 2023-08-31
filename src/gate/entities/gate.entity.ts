@@ -34,4 +34,11 @@ export class Gate extends BaseEntity{
         name: 'จังหวัด'
     })
     car_province: string
+
+    @Column()
+    gate_createat: Date
+
+    @Column()
+    gate_updateat: Date
+
 }
