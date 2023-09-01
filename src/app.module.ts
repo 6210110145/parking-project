@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ParkingModule } from './parking/parking.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { GateModule } from './gate/gate.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       inject: [ConfigService],
     }),
     ParkingModule,
+    GateModule
   ],
   controllers: [AppController],
   providers: [AppService],

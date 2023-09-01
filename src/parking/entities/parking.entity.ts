@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('Parking')
 export class Parking extends BaseEntity{
@@ -33,9 +33,9 @@ export class Parking extends BaseEntity{
     })
     parking_costpermi: number
 
-    @Column()
+    @CreateDateColumn()
     createat: Date
 
-    @Column()
+    @UpdateDateColumn()
     updateat: Date
 }

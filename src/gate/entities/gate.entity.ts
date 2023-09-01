@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('Gate')
 export class Gate extends BaseEntity {
@@ -35,9 +35,9 @@ export class Gate extends BaseEntity {
     })
     car_province: string
 
-    @Column()
+    @CreateDateColumn()
     gate_createat: Date
 
-    @Column()
+    @UpdateDateColumn()
     gate_updateat: Date
 }
