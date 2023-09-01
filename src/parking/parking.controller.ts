@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ParkingService } from './parking.service';
 import { ParkingDto } from './parking.dto/create-parking.dto';
 
@@ -10,5 +10,11 @@ export class ParkingController {
     createParking(@Body() parkingDto: ParkingDto) {
         return this.parkingService.createParking(parkingDto)
     }
+
+    @Get()
+    showParking() {
+        return this.parkingService.ShowParking()
+    }
+
 
 }

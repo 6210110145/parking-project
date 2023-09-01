@@ -1,4 +1,7 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Parking } from "src/parking/entities/parking.entity";
+import { BaseEntity, Column, CreateDateColumn, Entity, 
+        ManyToOne, 
+        PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('Gate')
 export class Gate extends BaseEntity {
@@ -21,7 +24,8 @@ export class Gate extends BaseEntity {
     gate_type: string
 
     @Column({
-        name: 'time'
+        name: 'time',
+        type: 'timestamp without time zone'
     })
     gate_time: Date
 
@@ -40,4 +44,10 @@ export class Gate extends BaseEntity {
 
     @UpdateDateColumn()
     gate_updateat: Date
+
+    @ManyToOne(() => Parking, parking => parking.gate)
+    parking: Parking
+
+    @Column()
+    parking_id: number
 }

@@ -7,16 +7,20 @@ import { ParkingDto } from './parking.dto/create-parking.dto';
 @Injectable()
 export class ParkingService {
     constructor(@InjectRepository(Parking)
-        private parkingReplository: Repository<Parking>) {}
+        private parkingRepository: Repository<Parking>) {}
 
     createParking(parkingDto: ParkingDto) {
-        const newParking = this.parkingReplository.create(parkingDto)
+        const newParking = this.parkingRepository.create(parkingDto)
         try{
-            return this.parkingReplository.save(newParking)
+            return this.parkingRepository.save(newParking)
         } catch(e) {
             throw new ConflictException({
                 message: ['Can not create']
             })
-           } 
+        } 
+    }
+
+    ShowParking(): Promise<Parking[]> {
+        return this.parkingRepository.find()
     }
 }
