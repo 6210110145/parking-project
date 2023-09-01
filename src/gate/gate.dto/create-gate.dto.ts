@@ -1,12 +1,12 @@
-import { IsNotEmpty } from "class-validator"
+import { IsNotEmpty } from "class-validator";
 
-export class CreateGateDto {
+export class GateDto {
     @IsNotEmpty()
     gate_id: number
 
     @IsNotEmpty()
     gate_name: string
-    
+
     @IsNotEmpty()
     gate_type: string
 

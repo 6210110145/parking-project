@@ -1,10 +1,10 @@
-import { ColdObservable } from "rxjs/internal/testing/ColdObservable";
-import { BaseEntity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-export class Gate extends BaseEntity{
+@Entity('Gate')
+export class Gate extends BaseEntity {
     @PrimaryGeneratedColumn({
         type: 'bigint',
-        name: 'gate_id'
+        name: 'parking_id'
     })
     gate_id: number
 
@@ -15,7 +15,7 @@ export class Gate extends BaseEntity{
     gate_name: string
 
     @Column({
-        name: 'in-out gates',
+        name: 'in-out',
         nullable: false
     })
     gate_type: string
@@ -26,7 +26,7 @@ export class Gate extends BaseEntity{
     gate_time: Date
 
     @Column({
-        name: 'เลขป้ายทะเบียน'
+        name: 'ป้ายทะเบียน'
     })
     car_license: string
 
@@ -40,5 +40,4 @@ export class Gate extends BaseEntity{
 
     @Column()
     gate_updateat: Date
-
 }
