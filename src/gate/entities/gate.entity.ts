@@ -49,7 +49,5 @@ export class Gate extends BaseEntity {
     gate_updateat: Date
 
     @ManyToOne(() => Parking, parking => parking.gates)
-    @JoinColumn()
     parking: Parking
-
 }

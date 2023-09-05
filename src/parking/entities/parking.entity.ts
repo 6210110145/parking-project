@@ -42,6 +42,5 @@ export class Parking extends BaseEntity{
     updateat: Date
 
     @OneToMany(() => Gate, gates => gates.parking)
-    @JoinColumn()
     gates: Gate[]
 }

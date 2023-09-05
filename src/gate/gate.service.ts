@@ -3,22 +3,21 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Gate } from './entities/gate.entity';
 import { Repository } from 'typeorm';
 import { GateDto } from './gate.dto/create-gate.dto';
-import { Parking } from 'src/parking/entities/parking.entity';
+import { ParkingService } from 'src/parking/parking.service';
 
 @Injectable()
 export class GateService {
     constructor(@InjectRepository(Gate)
-        private gateRepository: Repository<Gate>) {}
+        private gateRepository: Repository<Gate>,
+        private pakingService: ParkingService) {}
 
-    createGate(gateDto: GateDto) {
-        const newGate = this.gateRepository.create(gateDto)
-        try{
-            return this.gateRepository.save(newGate)
-        } catch(e) {
-            throw new ConflictException({
-                message: ['Can not create']
-            })
-        } 
+    async createGate(gateDto: GateDto, parking_id: number) {
+        let newGate: Gate = new Gate()
+        newGate.gate_name = gateDto.gate_name,
+        newGate.gate_type = gateDto.gate_type,
+        newGate.parking = await this.pakingService.findParkingById(parking_id)
+
+        return await this.gateRepository.save(newGate)
     }
 
     showGate() {

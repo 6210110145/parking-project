@@ -6,6 +6,7 @@ import { Parking } from './entities/parking.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Parking])],
+  exports: [ParkingService],
   controllers: [ParkingController],
   providers: [ParkingService]
 })

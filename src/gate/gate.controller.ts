@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
 import { GateService } from './gate.service';
 import { GateDto } from './gate.dto/create-gate.dto';
 
@@ -6,9 +6,10 @@ import { GateDto } from './gate.dto/create-gate.dto';
 export class GateController {
     constructor(private gateService: GateService) {}
 
-    @Post()
-    createGate(@Body() gateDto: GateDto) {
-        return this.gateService.createGate(gateDto)
+    @Post(':parking_id')
+    createGate(@Body() gateDto: GateDto, 
+               @Param('parking_id') parking_id: number) {
+        return this.gateService.createGate(gateDto, Number(parking_id))
     }
 
     @Get()

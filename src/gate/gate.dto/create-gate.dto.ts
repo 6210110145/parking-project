@@ -23,6 +23,5 @@ export class GateDto {
 
     gate_updateat: Date
 
-    parking: Parking
-
+    parking_id: number
 }
