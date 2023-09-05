@@ -1,5 +1,6 @@
 import { Parking } from "src/parking/entities/parking.entity";
 import { BaseEntity, Column, CreateDateColumn, Entity, 
+        JoinColumn, 
         ManyToOne, 
         PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
@@ -23,6 +24,7 @@ export class Gate extends BaseEntity {
     })
     gate_type: string
 
+    /*
     @Column({
         name: 'time',
         type: 'timestamp without time zone'
@@ -38,6 +40,7 @@ export class Gate extends BaseEntity {
         name: 'จังหวัด'
     })
     car_province: string
+    */
 
     @CreateDateColumn()
     gate_createat: Date
@@ -45,9 +48,8 @@ export class Gate extends BaseEntity {
     @UpdateDateColumn()
     gate_updateat: Date
 
-    @ManyToOne(() => Parking, parking => parking.gate)
+    @ManyToOne(() => Parking, parking => parking.gates)
+    @JoinColumn()
     parking: Parking
 
-    @Column()
-    parking_id: number
 }

@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsString } from "class-validator";
+import { Gate } from "src/gate/entities/gate.entity";
 
 export class ParkingDto {
     @IsNotEmpty()
@@ -6,7 +7,7 @@ export class ParkingDto {
 
     @IsString()
     @IsNotEmpty()
-    paking_name: string
+    parking_name: string
 
     @IsNotEmpty()
     parking_costpermi: number
@@ -20,4 +21,6 @@ export class ParkingDto {
     createat: Date
 
     updateat: Date
+
+    gates: Gate[]
 }

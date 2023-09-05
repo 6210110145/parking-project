@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Gate } from './entities/gate.entity';
 import { Repository } from 'typeorm';
 import { GateDto } from './gate.dto/create-gate.dto';
+import { Parking } from 'src/parking/entities/parking.entity';
 
 @Injectable()
 export class GateService {
@@ -18,5 +19,13 @@ export class GateService {
                 message: ['Can not create']
             })
         } 
+    }
+
+    showGate() {
+        return this.gateRepository.find({
+            relations: {
+                parking: true
+            }
+        })
     }
 }

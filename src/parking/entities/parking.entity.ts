@@ -1,5 +1,5 @@
 import { Gate } from "src/gate/entities/gate.entity";
-import { BaseEntity, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('Parking')
 export class Parking extends BaseEntity{
@@ -23,7 +23,7 @@ export class Parking extends BaseEntity{
     parking_total: number
 
     @Column({
-        name: 'จำนวนช่องที่จอด',
+        name: 'จำนวนช่องที่รถจอด',
         default: 0,
         nullable: false
     })
@@ -41,6 +41,7 @@ export class Parking extends BaseEntity{
     @UpdateDateColumn()
     updateat: Date
 
-    @OneToMany(() => Gate, gate => gate.parking)
-    gate: Gate[]
+    @OneToMany(() => Gate, gates => gates.parking)
+    @JoinColumn()
+    gates: Gate[]
 }
