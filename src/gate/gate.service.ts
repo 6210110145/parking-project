@@ -27,4 +27,8 @@ export class GateService {
             }
         })
     }
+
+    async removeGate(gateID: number) {
+        return await this.gateRepository.delete(gateID)
+    }
 }

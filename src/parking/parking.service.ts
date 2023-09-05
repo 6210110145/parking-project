@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Parking } from './entities/parking.entity';
 import { Repository } from 'typeorm';
@@ -25,8 +25,24 @@ export class ParkingService {
     }
 
     findParkingById(id: number) {
-        return this.parkingRepository.findOne({ 
-            where: {parking_id: id},
-            relations: {gates: true}})
+        try{
+            return this.parkingRepository.findOne({ 
+                where: {parking_id: id},
+                relations: {gates: true}})
+        }catch(e) {
+            throw new NotFoundException({
+                message: ['This parking is Not Created']
+            })
+        }
+    }
+
+    async removeParking(parkingId: number) {
+        try {
+            return await this.parkingRepository.delete(parkingId)
+        }catch(e) {
+            throw new NotFoundException ({
+                message: ['This parking is Not Created']
+            })
+        }
     }
 }

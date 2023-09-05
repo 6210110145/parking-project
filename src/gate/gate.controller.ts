@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Req } from '@nestjs/common';
 import { GateService } from './gate.service';
 import { GateDto } from './gate.dto/create-gate.dto';
 
@@ -15,5 +15,10 @@ export class GateController {
     @Get()
     showGate() {
         return this.gateService.showGate()
+    }
+
+    @Delete(':gate_id')
+    removeGate(@Param('gate_id') gateID: number) {
+        return this.gateService.removeGate(gateID)
     }
 }

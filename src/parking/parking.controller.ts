@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ParkingService } from './parking.service';
 import { ParkingDto } from './parking.dto/create-parking.dto';
 import { Parking } from './entities/parking.entity';
@@ -18,8 +18,13 @@ export class ParkingController {
     }
     
     @Get(':parking_id')
-    findOne(@Param('parking_id') id: string) {
-    return this.parkingService.findParkingById(+id)
+    findOne(@Param('parking_id') parkingId: string) {
+    return this.parkingService.findParkingById(+parkingId)
+    }
+
+    @Delete(':parking_id')
+    removeParking(@Param('parking_id') parkingId: string) {
+        return this.parkingService.removeParking(+parkingId)
     }
 
 }
