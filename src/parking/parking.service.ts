@@ -36,6 +36,10 @@ export class ParkingService {
         }
     }
 
+    async updateParking(parkingDto: ParkingDto, parkingId: number) {
+        return await this.parkingRepository.update(parkingId, parkingDto)
+    }
+
     async removeParking(parkingId: number) {
         try {
             return await this.parkingRepository.delete(parkingId)

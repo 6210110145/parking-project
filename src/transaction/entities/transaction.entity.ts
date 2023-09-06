@@ -1,10 +1,10 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('Transaction')
 export class Transaction extends BaseEntity {
     @PrimaryGeneratedColumn({
         type: 'bigint',
-        name: 'parking_id'
+        name: 'transaction_id'
     })
     transaction_id: number
     
@@ -37,4 +37,43 @@ export class Transaction extends BaseEntity {
         nullable: false
     })
     parking_costpermi: number
+
+    @Column({
+        name: 'ทางเข้า'
+    })
+    gate_nameIn: string
+
+    @Column({
+        name: 'เวลาเข้า',
+        type: 'time'
+    })
+    time_in: Date
+
+    @Column({
+        name: 'เวลาออก(ฟรี)',
+        type: 'time'
+    })
+    time_outNocash: Date
+
+    @Column({
+        name: 'ทางออก',
+    })
+    gate_nameOut: string
+
+    @Column({
+        name: 'เวลาออก',
+        type: 'time'
+    })
+    time_out: Date
+
+    @Column({
+        name: 'เวลาที่จอด'
+    })
+    time_total: number
+
+    @CreateDateColumn()
+    transaction_createat: Date
+
+    @UpdateDateColumn()
+    transaction_updateat: Date
 }
