@@ -23,6 +23,4 @@ export class ParkingDto {
     updateat: Date
 
     gates: Gate[]
-
-    transaction_id: number
 }

@@ -1,15 +1,15 @@
-import { IsNotEmpty } from "class-validator";
-import { Parking } from "src/parking/entities/parking.entity";
-import { ForeignKeyMetadata } from "typeorm/metadata/ForeignKeyMetadata";
+import { IsNotEmpty, IsString } from "class-validator";
 
 export class GateDto {
     @IsNotEmpty()
     gate_id: number
 
     @IsNotEmpty()
+    @IsString()
     gate_name: string
 
     @IsNotEmpty()
+    @IsString()
     gate_type: string
 
     /*
