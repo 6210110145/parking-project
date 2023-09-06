@@ -24,7 +24,8 @@ export class GateService {
     showGate() {
         return this.gateRepository.find({
             relations: {
-                parking: true
+                parking: true,
+                transaction: true
             }
         })
     }

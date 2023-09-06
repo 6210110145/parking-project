@@ -13,13 +13,15 @@ export class Transaction extends BaseEntity {
     
     @Column({
         name: 'เลขทะเบียน',
-        nullable: false
+        nullable: false,
+        unique: true
     })
     car_license: string
 
     @Column({
         name: 'จังหวัด',
-        nullable: false
+        nullable: false,
+        unique: true
     })
     car_province: string
 

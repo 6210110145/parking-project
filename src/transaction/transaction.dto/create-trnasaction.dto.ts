@@ -12,7 +12,6 @@ export class TransactionDto {
     @IsString()
     car_province: string
     
-    @IsDate()
     date: Date
 
     parking_name: string

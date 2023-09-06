@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { ParkingService } from './parking.service';
 import { ParkingDto } from './parking.dto/create-parking.dto';
-import { Parking } from './entities/parking.entity';
+import { UpdateParkingDto } from './parking.dto/update-parking.dto';
 
 @Controller('parkings')
 export class ParkingController {
@@ -24,7 +24,7 @@ export class ParkingController {
 
     @Patch(':parking_id')   //parking/{parking_id}
     async updateParking(@Param('parking_id') parkingId: number,
-                  @Body() parkingDto: ParkingDto
+                        @Body() parkingDto: UpdateParkingDto
     ) {
         const parking = await this.parkingService.findParkingById(parkingId)
         parking.parking_name = parkingDto.parking_name,
