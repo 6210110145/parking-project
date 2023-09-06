@@ -35,11 +35,9 @@ export class GateService {
         })
     }
 
-    async updateGate(gateDto: UpdateGateDto, gateId: number) {
-        await this.gateRepository.update(gateId, gateDto)
-        return await this.gateRepository.findOne({
-            where: {gate_id: gateId}
-        })
+    async updateGate(gateDto: UpdateGateDto) {
+        const updateGate = this.gateRepository.create(gateDto)
+        return await this.gateRepository.save(updateGate)
     }
 
     async removeGate(gateID: number) {

@@ -23,12 +23,18 @@ export class GateController {
     findOne(@Param('gate_id') gateID: number) {
         return this.gateService.findGateById(gateID)
     }
-    /*
-    @Put(':gate_id')    //gate/{gate_id}
-    update(@Param('gate_id') gate_id: number, @Body() updateUserDto: UpdateGateDto) {
-    return this.gateService.updateGate(gate_id,updateUserDto);
+    
+    @Patch(':gate_id')    //gate/{gate_id}
+    async update(@Param('gate_id') gateId: number, 
+           @Body() updateGateDto: UpdateGateDto
+    ) {
+        const gate = await this.gateService.findGateById(gateId)
+        gate.gate_name = updateGateDto.gate_name,
+        gate.gate_type = updateGateDto.gate_type
+
+        return await this.gateService.updateGate(gate)
     }
-    */
+    
 
     @Delete(':gate_id')
     removeGate(@Param('gate_id') gateID: number) {

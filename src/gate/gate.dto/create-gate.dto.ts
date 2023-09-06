@@ -1,5 +1,6 @@
 import { IsNotEmpty } from "class-validator";
 import { Parking } from "src/parking/entities/parking.entity";
+import { ForeignKeyMetadata } from "typeorm/metadata/ForeignKeyMetadata";
 
 export class GateDto {
     @IsNotEmpty()
@@ -11,7 +12,7 @@ export class GateDto {
     @IsNotEmpty()
     gate_type: string
 
-     /*
+    /*
     gate_time: Date
 
     car_license: string
@@ -24,4 +25,6 @@ export class GateDto {
     gate_updateat: Date
 
     parking_id: number
+
+    transaction_id: number
 }

@@ -1,4 +1,12 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
+import { TransactionService } from './transaction.service';
 
-@Controller('transaction')
-export class TransactionController {}
+@Controller('transactions')
+export class TransactionController {
+    constructor(private transactionService: TransactionService) {}
+
+    @Get(':transaction_id')
+    findOne(@Param('transaction_id') transactionId: number) {
+        return this.transactionService.findTransactionById(transactionId)
+    }
+}

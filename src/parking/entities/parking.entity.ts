@@ -1,5 +1,7 @@
 import { Gate } from "src/gate/entities/gate.entity";
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Transaction } from "src/transaction/entities/transaction.entity";
+import { BaseEntity, Column, CreateDateColumn, Entity, 
+        ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('Parking')
 export class Parking extends BaseEntity{
@@ -43,4 +45,7 @@ export class Parking extends BaseEntity{
 
     @OneToMany(() => Gate, gates => gates.parking)
     gates: Gate[]
+
+    @ManyToOne(() => Transaction, transaction => transaction.parkings)
+    transaction: Transaction
 }

@@ -1,4 +1,7 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Gate } from "src/gate/entities/gate.entity";
+import { Parking } from "src/parking/entities/parking.entity";
+import { BaseEntity, Column, CreateDateColumn, Entity, OneToMany, 
+         PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('Transaction')
 export class Transaction extends BaseEntity {
@@ -76,4 +79,10 @@ export class Transaction extends BaseEntity {
 
     @UpdateDateColumn()
     transaction_updateat: Date
+
+    @OneToMany(() => Gate, gates => gates.transaction)
+    gates: Gate[]
+
+    @OneToMany(() => Parking, parking => parking.transaction)
+    parkings: Parking[]
 }
