@@ -8,7 +8,7 @@ import { BaseEntity, Column, CreateDateColumn, Entity,
 export class Gate extends BaseEntity {
     @PrimaryGeneratedColumn({
         type: 'bigint',
-        name: 'parking_id'
+        name: 'gate_id'
     })
     gate_id: number
 

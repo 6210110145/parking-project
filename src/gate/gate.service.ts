@@ -1,9 +1,10 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Gate } from './entities/gate.entity';
 import { Repository } from 'typeorm';
 import { GateDto } from './gate.dto/create-gate.dto';
 import { ParkingService } from 'src/parking/parking.service';
+import { UpdateGateDto } from './gate.dto/update-gate.dto';
 
 @Injectable()
 export class GateService {
@@ -26,6 +27,16 @@ export class GateService {
                 parking: true
             }
         })
+    }
+
+    findGateById(gateId: number) {
+        return this.gateRepository.findOne({
+            where: {gate_id: gateId}
+        })
+    }
+
+    updateGate(gateId: number) {
+        return this.gateRepository.update(gateId)
     }
 
     async removeGate(gateID: number) {
