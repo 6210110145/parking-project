@@ -23,14 +23,14 @@ export class Parking extends BaseEntity{
         nullable: false
     })
     parking_total: number
-
+    /*
     @Column({
         name: 'จำนวนช่องที่รถจอด',
         default: 0,
         nullable: false
     })
     parking_notEmpty: number
-
+    */
     @Column({
         name: 'ค่าจอด(บาท/30 นาที)',
         nullable: false

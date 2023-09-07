@@ -8,6 +8,10 @@ import { Gate } from './entities/gate.entity';
 export class GateController {
     constructor(private gateService: GateService) {}
 
+    // license_plateService 
+    // createTransaction when license do not insert in Transaction
+    // updateTransaction when license is inserted in Transaction
+
     @Post(':parking_id')    //gate/{parking_id}
     createGate(@Body() gateDto: GateDto, 
                @Param('parking_id') parking_id: number) {

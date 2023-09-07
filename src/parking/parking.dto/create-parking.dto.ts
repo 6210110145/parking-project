@@ -14,10 +14,10 @@ export class ParkingDto {
 
     @IsNotEmpty()
     parking_total: number
-    
+    /*
     @IsNotEmpty()
     parking_notEmpty: number
-
+    */
     createat: Date
 
     updateat: Date

@@ -29,8 +29,7 @@ export class ParkingController {
         const parking = await this.parkingService.findParkingById(parkingId)
         parking.parking_name = parkingDto.parking_name,
         parking.parking_total = parkingDto.parking_total,
-        parking.parking_costpermi = parkingDto.parking_costpermi,
-        parking.parking_notEmpty = parkingDto.parking_notEmpty
+        parking.parking_costpermi = parkingDto.parking_costpermi
 
         return await this.parkingService.createParking(parking)
     }

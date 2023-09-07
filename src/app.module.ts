@@ -6,6 +6,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GateModule } from './gate/gate.module';
 import { TransactionModule } from './transaction/transaction.module';
+import { LicensePlateController } from './license_plate/license_plate.controller';
+import { LicensePlateService } from './license_plate/license_plate.service';
 
 @Module({
   imports: [
@@ -30,7 +32,7 @@ import { TransactionModule } from './transaction/transaction.module';
     GateModule,
     TransactionModule
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, LicensePlateController],
+  providers: [AppService, LicensePlateService],
 })
 export class AppModule {}
