@@ -32,14 +32,12 @@ export class Transaction extends BaseEntity {
     date: Date
 
     @Column({
-        name: 'ลานจอด',
-        nullable: false
+        name: 'ลานจอด'
     })
     parking_name: string
 
     @Column({
-        name: 'ค่าจอด(บาท/30 นาที)',
-        nullable: false
+        name: 'ค่าจอด(บาท/30 นาที)'
     })
     parking_costpermi: number
 
