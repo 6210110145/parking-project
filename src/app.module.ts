@@ -8,6 +8,7 @@ import { GateModule } from './gate/gate.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { LicensePlateController } from './license_plate/license_plate.controller';
 import { LicensePlateService } from './license_plate/license_plate.service';
+import { LicensePlateModule } from './license_plate/license_plate.module';
 
 @Module({
   imports: [
@@ -30,7 +31,8 @@ import { LicensePlateService } from './license_plate/license_plate.service';
     }),
     ParkingModule,
     GateModule,
-    TransactionModule
+    TransactionModule,
+    LicensePlateModule
   ],
   controllers: [AppController, LicensePlateController],
   providers: [AppService, LicensePlateService],
