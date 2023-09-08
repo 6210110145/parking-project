@@ -10,10 +10,11 @@ export class ParkingDto {
     parking_name: string
 
     @IsNotEmpty()
-    parking_costpermi: number
+    parking_total: number
 
     @IsNotEmpty()
-    parking_total: number
+    parking_costpermi: number
+    
     /*
     @IsNotEmpty()
     parking_notEmpty: number
