@@ -6,9 +6,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GateModule } from './gate/gate.module';
 import { TransactionModule } from './transaction/transaction.module';
-import { LicensePlateController } from './license_plate/license_plate.controller';
-import { LicensePlateService } from './license_plate/license_plate.service';
-import { LicensePlateModule } from './license_plate/license_plate.module';
+import { LicensePlateController } from './camera/camera.controller';
+import { LicensePlateService } from './camera/camera.service';
+import { LicensePlateModule } from './camera/camera.module';
 
 @Module({
   imports: [

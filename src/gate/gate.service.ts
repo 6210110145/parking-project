@@ -36,6 +36,12 @@ export class GateService {
         })
     }
 
+    findGateByName(gateName: string) {
+        return this.gateRepository.findOne({
+            where: {gate_name: gateName}
+        })
+    }
+
     async updateGate(gateDto: UpdateGateDto) {
         const updateGate = this.gateRepository.create(gateDto)
         return await this.gateRepository.save(updateGate)

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { LicensePlateController } from './license_plate.controller';
-import { LicensePlateService } from './license_plate.service';
+import { LicensePlateController } from './camera.controller';
+import { LicensePlateService } from './camera.service';
 
 @Module({
     imports: [],

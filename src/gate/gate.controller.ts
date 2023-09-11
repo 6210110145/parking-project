@@ -38,7 +38,6 @@ export class GateController {
 
         return await this.gateService.updateGate(gate)
     }
-    
 
     @Delete(':gate_id')
     removeGate(@Param('gate_id') gateID: number) {
