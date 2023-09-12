@@ -27,6 +27,11 @@ export class GateController {
     findOne(@Param('gate_id') gateID: number) {
         return this.gateService.findGateById(gateID)
     }
+
+    /*@Get('gateName/:gate_name')
+    findGateByName(@Param('gate_name') gateName: string) {
+        return this.gateService.findGateByName(gateName)
+    } */  
     
     @Patch(':gate_id')    //gate/{gate_id}
     async update(@Param('gate_id') gateId: number, 

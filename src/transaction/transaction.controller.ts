@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
-import { TransactionDto } from './transaction.dto/create-trnasaction.dto';
+import { TransactionDto } from './transaction.dto/create-transaction.dto';
 
 @Controller('transactions')
 export class TransactionController {
@@ -8,7 +8,7 @@ export class TransactionController {
 
     @Post()
     createTransaction(@Body() transactionDto: TransactionDto) {
-        return this.transactionService.createTransaction(transactionDto)
+        
     }
 
     @Get(':transaction_id')

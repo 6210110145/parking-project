@@ -25,7 +25,7 @@ export class Transaction extends BaseEntity {
     })
     car_province: string
 
-    @Column({
+    @CreateDateColumn({
         name: 'วันที่',
         type: 'date'
     })
@@ -37,16 +37,11 @@ export class Transaction extends BaseEntity {
     parking_name: string
 
     @Column({
-        name: 'ค่าจอด(บาท/30 นาที)'
-    })
-    parking_costpermi: number
-
-    @Column({
         name: 'ทางเข้า'
     })
     gate_nameIn: string
 
-    @Column({
+    @CreateDateColumn({
         name: 'เวลาเข้า',
         type: 'time'
     })

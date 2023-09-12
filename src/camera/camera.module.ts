@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
-import { LicensePlateController } from './camera.controller';
-import { LicensePlateService } from './camera.service';
+import { CameraController } from './camera.controller';
+import { CameraService } from './camera.service';
 
 @Module({
-    imports: [],
-    controllers: [LicensePlateController],
-    providers: [LicensePlateService]
+    imports: [ ],
+    controllers: [CameraController],
+    providers: [CameraService],
+    exports: [CameraService]
 })
-export class LicensePlateModule {}
+export class CameraModule {}

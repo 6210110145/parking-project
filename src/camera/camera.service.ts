@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { Cameras } from './camera.interface';
 
 @Injectable()
-export class LicensePlateService {
+export class CameraService {
     constructor(
-        private readonly camearas: Cameras[] = []
+        private camearas: Cameras[] = []
     ) {}
 
     createCamera(cameara: Cameras) {

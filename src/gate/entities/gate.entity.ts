@@ -24,24 +24,6 @@ export class Gate extends BaseEntity {
     })
     gate_type: string
 
-    /*
-    @Column({
-        name: 'time',
-        type: 'timestamp without time zone'
-    })
-    gate_time: Date
-
-    @Column({
-        name: 'ป้ายทะเบียน'
-    })
-    car_license: string
-
-    @Column({
-        name: 'จังหวัด'
-    })
-    car_province: string
-    */
-
     @CreateDateColumn()
     gate_createat: Date
 

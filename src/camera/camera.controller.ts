@@ -1,15 +1,20 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { LicensePlateService } from './camera.service';
+import { CameraService } from './camera.service';
 import { Cameras } from './camera.interface';
 
 @Controller('cameras')
-export class LicensePlateController {
+export class CameraController {
     constructor(
-        private licensePlateService: LicensePlateService
+        private cameraService: CameraService
     ) {}
 
     @Post()
-    async keepCamera(@Body() cameara: Cameras){
-        this.licensePlateService.createCamera(cameara)
+    async keepCamera(@Body() cameara: Cameras) {
+        this.cameraService.createCamera(cameara)
+    }
+
+    @Get()
+    async showAll():Promise<Cameras[]> {
+        return this.cameraService.showAll()
     }
 }

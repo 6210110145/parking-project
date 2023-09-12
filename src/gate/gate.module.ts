@@ -11,6 +11,7 @@ import { TransactionModule } from 'src/transaction/transaction.module';
                ParkingModule,
                TransactionModule],
     controllers: [GateController],
-    providers: [GateService]
+    providers: [GateService],
+    exports: [GateService]
 })
 export class GateModule {}
