@@ -9,7 +9,8 @@ import { ParkingModule } from 'src/parking/parking.module';
 @Module({
   imports: [ 
     TypeOrmModule.forFeature([ Transaction ]),
-    GateModule],
+    GateModule,
+    ParkingModule],
   exports: [ TransactionService ],
   controllers: [TransactionController],
   providers: [TransactionService]

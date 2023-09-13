@@ -17,10 +17,6 @@ export class TransactionService {
         return await this.transactionRepository.save(newTransaction)
     }
 
-    updateTransactionOut(transaction: TransactionDto) {
-        
-    }
-
     findTransactionById(transactionId: number) {
         return this.transactionRepository.findOne({
             where: { transaction_id: transactionId}

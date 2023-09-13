@@ -38,7 +38,9 @@ export class GateService {
 
     async findGateByName(gateName: string) {
         return await this.gateRepository.findOne({
-            where: {gate_name: gateName},
+            where: {
+                gate_name: gateName,
+            },
             //select: {gate_type: true}
         })
     }

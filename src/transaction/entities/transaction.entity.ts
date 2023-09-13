@@ -13,15 +13,13 @@ export class Transaction extends BaseEntity {
     
     @Column({
         name: 'เลขทะเบียน',
-        nullable: false,
-        unique: true
+        nullable: false
     })
     car_license: string
 
     @Column({
         name: 'จังหวัด',
-        nullable: false,
-        unique: true
+        nullable: false
     })
     car_province: string
 
@@ -45,7 +43,7 @@ export class Transaction extends BaseEntity {
 
     @CreateDateColumn({
         name: 'เวลาเข้า',
-        type: 'time'
+        type: 'time without time zone'
     })
     time_in: Date
 
@@ -76,10 +74,14 @@ export class Transaction extends BaseEntity {
     })
     time_total: number
 
-    @CreateDateColumn()
+    @CreateDateColumn({
+        type: 'timestamp without time zone'
+    })
     transaction_createat: Date
 
-    @UpdateDateColumn()
+    @UpdateDateColumn({
+        type: 'timestamp without time zone'
+    })
     transaction_updateat: Date
 
     @OneToMany(() => Gate, gates => gates.transaction)

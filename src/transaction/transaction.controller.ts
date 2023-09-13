@@ -4,26 +4,36 @@ import { TransactionDto } from './transaction.dto/create-transaction.dto';
 import { GateService } from 'src/gate/gate.service';
 import { Transaction } from './entities/transaction.entity';
 import { Cameras } from 'src/camera/camera.interface';
+import { Gate } from 'src/gate/entities/gate.entity';
+import { Parking } from 'src/parking/entities/parking.entity';
+import { ParkingService } from 'src/parking/parking.service';
 
 @Controller('transactions')
 export class TransactionController {
     constructor(
         private transactionService: TransactionService,
-        private gateService: GateService) {}
+        private gateService: GateService,
+        private parkingService: ParkingService) {}
 
-    @Post('cameras')
+    @Post(':gate_name') //transaction/{camera_id} if {camera_id} == Gate1,2,3,...
     async createTransaction(
         @Body() transactionDto: Cameras,
         @Param('gate_name') gateName: string
     ) {
-        const gateType = await this.gateService.findGateByName(gateName)
-        console.log(gateType)
-        if (gateType.gate_type == 'in') {
+        let gate: Gate = await this.gateService.findGateByName(gateName)
+        let parkingName: Parking = await this.parkingService.findParkingByGate(gateName)
+        /*console.log(parkingName.parking_name)
+        console.log(gate.gate_type)
+        console.log(gate.gate_name)*/
+        
+        if (gate.gate_type == "in") {
             let newTransaction: Transaction = new Transaction()
-            newTransaction.gate_nameIn = transactionDto.gate_name
+            newTransaction.gate_nameIn = gate.gate_name
             newTransaction.car_license = transactionDto.car_license
             newTransaction.car_province = transactionDto.car_province
-            return this.transactionService.createTransactionIn(newTransaction)
+            newTransaction.parking_name = parkingName.parking_name
+          
+            return this.transactionService.createTransactionIn(newTransaction)    
         }
         return {
             test: true

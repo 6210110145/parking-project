@@ -12,14 +12,6 @@ export class GateDto {
     @IsString()
     gate_type: string
 
-    /*
-    gate_time: Date
-
-    car_license: string
-
-    car_province: string
-    */
-
     gate_createat: Date
 
     gate_updateat: Date

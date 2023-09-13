@@ -1,6 +1,5 @@
-import { Validate } from "class-validator"
 
-export interface Cameras{
+export class Cameras{
     gate_name?: string
 
     car_license?: string

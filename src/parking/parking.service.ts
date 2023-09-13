@@ -35,6 +35,18 @@ export class ParkingService {
             })
         }
     }
+
+    findParkingByGate(gateName: string) {
+        return this.parkingRepository.findOne({
+            where: {
+                gates: {
+                    gate_name: gateName
+                }
+            },
+            //relations: {gates: true}
+        })
+    }
+
     /*
     async updateParking(parkingDto: ParkingDto, parkingId: number) {
         return await this.parkingRepository.update(parkingId, parkingDto)
