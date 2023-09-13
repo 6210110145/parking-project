@@ -32,12 +32,14 @@ export class Transaction extends BaseEntity {
     date: Date
 
     @Column({
-        name: 'ลานจอด'
+        name: 'ลานจอด',
+        nullable: true
     })
     parking_name: string
 
     @Column({
-        name: 'ทางเข้า'
+        name: 'ทางเข้า',
+        nullable: true
     })
     gate_nameIn: string
 
@@ -47,25 +49,30 @@ export class Transaction extends BaseEntity {
     })
     time_in: Date
 
+    /*
     @Column({
         name: 'เวลาออก(ฟรี)',
         type: 'time'
     })
     time_outNocash: Date
+    */
 
     @Column({
         name: 'ทางออก',
+        nullable: true
     })
     gate_nameOut: string
 
     @Column({
         name: 'เวลาออก',
-        type: 'time'
+        type: 'time',
+        nullable: true
     })
     time_out: Date
 
     @Column({
-        name: 'เวลาที่จอด'
+        name: 'เวลาที่จอด',
+        nullable: true
     })
     time_total: number
 

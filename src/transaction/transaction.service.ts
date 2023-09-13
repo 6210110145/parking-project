@@ -12,12 +12,8 @@ export class TransactionService {
         private gateService: GateService) {}
     
     async createTransactionIn(transaction: TransactionDto) {
-        let newTransaction: Transaction = new Transaction()
-            newTransaction.car_license = transaction.car_license
-            newTransaction.car_province = transaction.car_province
-            newTransaction.parking_name = transaction.parking_name
-            newTransaction.gate_nameIn = transaction.gate_nameIn
-        
+        const newTransaction = this.transactionRepository.create(transaction)
+            
         return await this.transactionRepository.save(newTransaction)
     }
 

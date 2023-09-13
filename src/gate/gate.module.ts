@@ -8,8 +8,7 @@ import { TransactionModule } from 'src/transaction/transaction.module';
 
 @Module({
     imports: [ TypeOrmModule.forFeature([Gate]), 
-               ParkingModule,
-               TransactionModule],
+               ParkingModule],
     controllers: [GateController],
     providers: [GateService],
     exports: [GateService]

@@ -20,7 +20,7 @@ export class TransactionDto {
 
     time_in?: Date
 
-    time_outNocash?: Date
+    //time_outNocash?: Date
 
     gate_nameOut?: string
 

@@ -4,12 +4,12 @@ import { TransactionService } from './transaction.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Transaction } from './entities/transaction.entity';
 import { GateModule } from 'src/gate/gate.module';
+import { ParkingModule } from 'src/parking/parking.module';
 
 @Module({
   imports: [ 
     TypeOrmModule.forFeature([ Transaction ]),
-    GateModule
-  ],
+    GateModule],
   exports: [ TransactionService ],
   controllers: [TransactionController],
   providers: [TransactionService]
