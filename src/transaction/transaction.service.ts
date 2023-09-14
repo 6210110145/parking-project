@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Transaction } from './entities/transaction.entity';
-import { Repository } from 'typeorm';
+import { Repository, Timestamp } from 'typeorm';
 import { TransactionDto } from './transaction.dto/create-transaction.dto';
 
 @Injectable()
@@ -33,5 +33,16 @@ export class TransactionService {
                 car_license: license
             }
         })
+    }
+
+    async updateTransactionOut(license: string, gateName: string) {
+        let date:Date = new Date()
+
+        return await this.transactionRepository.update(
+            {car_license: license},
+            {
+                gate_nameOut: gateName,
+                time_out: date.toLocaleTimeString()}
+            )
     }
 }
