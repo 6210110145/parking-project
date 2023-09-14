@@ -11,18 +11,14 @@ export class CameraController {
         private gateService: GateService,
         private transactionService: TransactionService
     ) {}
-    /*
-    @Post('trascations')
-    async creatCamera(@Body() cameara: Cameras) {
-        const gateType = await this.gateService.findGateByName(cameara.gate_name)
-        if(gateType.gate_type == 'in') {
-            return this.transactionService.createTransactionIn(cameara)
-        }
+
+    @Post()
+    createCamera(@Body() camera: Cameras) {
+        return this.cameraService.createCamera(camera)
     }
-    */
 
     @Get()
     async showAll():Promise<Cameras[]> {
-        return this.cameraService.showAll()
+        return await this.cameraService.showAll()
     }
 }

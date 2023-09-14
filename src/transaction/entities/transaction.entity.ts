@@ -47,14 +47,6 @@ export class Transaction extends BaseEntity {
     })
     time_in: Date
 
-    /*
-    @Column({
-        name: 'เวลาออก(ฟรี)',
-        type: 'time'
-    })
-    time_outNocash: Date
-    */
-
     @Column({
         name: 'ทางออก',
         nullable: true

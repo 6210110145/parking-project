@@ -3,13 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Transaction } from './entities/transaction.entity';
 import { Repository } from 'typeorm';
 import { TransactionDto } from './transaction.dto/create-transaction.dto';
-import { GateService } from 'src/gate/gate.service';
 
 @Injectable()
 export class TransactionService {
     constructor(@InjectRepository(Transaction)
-        private transactionRepository: Repository<Transaction>,
-        private gateService: GateService) {}
+        private transactionRepository: Repository<Transaction>) {}
     
     async createTransactionIn(transaction: TransactionDto) {
         const newTransaction = this.transactionRepository.create(transaction)
@@ -17,9 +15,23 @@ export class TransactionService {
         return await this.transactionRepository.save(newTransaction)
     }
 
-    findTransactionById(transactionId: number) {
-        return this.transactionRepository.findOne({
-            where: { transaction_id: transactionId}
+    async findAllTransaction() {
+        return await this.transactionRepository.find()
+    }
+
+    async findTransactionById(transactionId: number) {
+        return await this.transactionRepository.findOne({
+            where: { 
+                transaction_id: transactionId
+            }
+        })
+    }
+
+    async findTransactionbyLicense(license: string) {
+        return await this.transactionRepository.findOne({
+            where:{
+                car_license: license
+            }
         })
     }
 }

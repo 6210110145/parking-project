@@ -22,28 +22,38 @@ export class TransactionController {
     ) {
         let gate: Gate = await this.gateService.findGateByName(gateName)
         let parkingName: Parking = await this.parkingService.findParkingByGate(gateName)
+        let transactionLicense = await this.transactionService.findTransactionbyLicense(transactionDto.car_license)
         /*console.log(parkingName.parking_name)
         console.log(gate.gate_type)
-        console.log(gate.gate_name)*/
+        console.log(transactionLicense) 
+        */
         
         if (gate.gate_type == "in") {
-            let newTransaction: Transaction = new Transaction()
-            newTransaction.gate_nameIn = gate.gate_name
-            newTransaction.car_license = transactionDto.car_license
-            newTransaction.car_province = transactionDto.car_province
-            newTransaction.parking_name = parkingName.parking_name
-          
-            return this.transactionService.createTransactionIn(newTransaction)    
-        }
-        return {
-            test: true
+            if(transactionLicense == null) { //if null == ยังไม่มีป้ายนี้เข้า => เข้าได้
+                let newTransaction: Transaction = new Transaction()
+                newTransaction.gate_nameIn = gate.gate_name
+                newTransaction.car_license = transactionDto.car_license
+                newTransaction.car_province = transactionDto.car_province
+                newTransaction.parking_name = parkingName.parking_name
+            
+                await this.transactionService.createTransactionIn(newTransaction)
+
+                return {
+                    test: true,
+                    
+                }
+            }else {
+                return `This car ${transactionDto.car_license} is parking But not Exit`
+            }        
         }
     }
 
-    @Get(':transaction_id')
-    findOne(@Param('transaction_id') transactionId: number) {
-        return this.transactionService.findTransactionById(transactionId)
+    @Get()
+    async findAll() {
+        let transaction = await this.transactionService.findAllTransaction()
+        return transaction
     }
+
 }
 
 
