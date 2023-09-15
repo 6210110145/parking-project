@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Transaction } from './entities/transaction.entity';
-import { Repository, Timestamp } from 'typeorm';
+import { Repository} from 'typeorm';
 import { TransactionDto } from './transaction.dto/create-transaction.dto';
 
 @Injectable()
@@ -37,15 +37,14 @@ export class TransactionService {
 
     async updateTransactionOut(license: string, gateName: string, timeIn: Date) {
         let timeOut:Date = new Date()
-        let timeTotal = (timeOut.valueOf() - timeIn.valueOf());
-
+        let timeTotal:number = ((timeOut.valueOf() - timeIn.valueOf()) / 60000);
 
         return await this.transactionRepository.update(
             {car_license: license},
             {
                 gate_nameOut: gateName,
                 time_out: timeOut,
-                time_total: timeTotal
+                time_total: Math.ceil(timeTotal) //float to integer
             }
         )
     }

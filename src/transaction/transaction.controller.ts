@@ -21,15 +21,17 @@ export class TransactionController {
         @Param('gate_name') gateName: string
     ) {
         //let gate: Gate = await this.gateService.findGateByName(transactionDto.gate_name)
+        const minutes = 30
         let gate: Gate = await this.gateService.findGateByName(gateName)
         let parkingName: Parking = await this.parkingService.findParkingByGate(gateName)
         let transaction: Transaction = await this.transactionService.findTransactionbyLicense(transactionDto.car_license)
         let timeIn: Date = new Date()
-        timeIn.setTime(timeIn.getTime() - timeIn.getTimezoneOffset() * 60000)
+        let timeOutFree = new Date(timeIn.getTime() + (minutes * 60000))
+        //timeIn.setTime(timeIn.getTime() - timeIn.getTimezoneOffset() * 60000)
         /*console.log(parkingName.parking_name)
-        console.log(gate.gate_type)*/
-        console.log(timeIn)
-        /*
+        console.log(gate.gate_type)
+        console.log(timeIn)*/
+        
         if (gate.gate_type == "in") {
             if(transaction == null) { //if ==null คือ ยังไม่มีป้ายนี้เข้า => เข้าได้
                 let newTransaction: Transaction = new Transaction()
@@ -37,7 +39,8 @@ export class TransactionController {
                 newTransaction.car_license = transactionDto.car_license
                 newTransaction.car_province = transactionDto.car_province
                 newTransaction.parking_name = parkingName.parking_name
-                newTransaction.time_in = timeIn.toLocaleDateString()
+                newTransaction.time_in = timeIn
+                newTransaction.time_freeAt = timeOutFree
                 
                 await this.transactionService.createTransactionIn(newTransaction)
 
@@ -61,7 +64,7 @@ export class TransactionController {
             }else {
                 return `This ${transactionDto.car_license} have not parked`
             }
-        } */  
+        }
     }
 
     @Get()

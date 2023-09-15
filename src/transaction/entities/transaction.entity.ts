@@ -48,6 +48,12 @@ export class Transaction extends BaseEntity {
     time_in: Date
 
     @Column({
+        name: 'เวลาออก(ฟรี)',
+        nullable: true
+    })
+    time_freeAt ?: Date
+
+    @Column({
         name: 'ทางออก',
         nullable: true
     })
@@ -62,6 +68,7 @@ export class Transaction extends BaseEntity {
 
     @Column({
         name: 'เวลาที่จอด',
+        type: 'float4',
         nullable: true
     })
     time_total: number
