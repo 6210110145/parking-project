@@ -1,4 +1,12 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Post } from '@nestjs/common';
+import { PaymentService } from './payment.service';
 
 @Controller('payment')
-export class PaymentController {}
+export class PaymentController {
+    constructor(private paymentService: PaymentService) {}
+
+    @Post()
+    createPayment() {
+        
+    }
+}
