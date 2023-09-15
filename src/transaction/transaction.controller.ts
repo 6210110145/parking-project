@@ -20,20 +20,19 @@ export class TransactionController {
         @Body() transactionDto: Cameras,
         @Param('gate_name') gateName: string
     ) {
+        const minutes = 30 // ไม่เกินกี่นาที ออกจากลานแล้วไม่เสียตังค์
         //let gate: Gate = await this.gateService.findGateByName(transactionDto.gate_name)
-        const minutes = 30
         let gate: Gate = await this.gateService.findGateByName(gateName)
         let parkingName: Parking = await this.parkingService.findParkingByGate(gateName)
         let transaction: Transaction = await this.transactionService.findTransactionbyLicense(transactionDto.car_license)
         let timeIn: Date = new Date()
         let timeOutFree = new Date(timeIn.getTime() + (minutes * 60000))
-        //timeIn.setTime(timeIn.getTime() - timeIn.getTimezoneOffset() * 60000)
         /*console.log(parkingName.parking_name)
         console.log(gate.gate_type)
         console.log(timeIn)*/
         
         if (gate.gate_type == "in") {
-            if(transaction == null) { //if ==null คือ ยังไม่มีป้ายนี้เข้า => เข้าได้
+            if((transaction == null)) { //if ==null คือ ยังไม่มีป้ายนี้เข้า => เข้าได้
                 let newTransaction: Transaction = new Transaction()
                 newTransaction.gate_nameIn = gate.gate_name
                 newTransaction.car_license = transactionDto.car_license
