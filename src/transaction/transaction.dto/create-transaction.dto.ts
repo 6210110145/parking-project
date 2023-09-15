@@ -18,7 +18,7 @@ export class TransactionDto {
 
     gate_nameIn?: string
 
-    time_in?: string
+    time_in?: Date
 
     gate_nameOut?: string
 

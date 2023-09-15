@@ -35,14 +35,18 @@ export class TransactionService {
         })
     }
 
-    async updateTransactionOut(license: string, gateName: string) {
-        let date:Date = new Date()
+    async updateTransactionOut(license: string, gateName: string, timeIn: Date) {
+        let timeOut:Date = new Date()
+        let timeTotal = (timeOut.valueOf() - timeIn.valueOf());
+
 
         return await this.transactionRepository.update(
             {car_license: license},
             {
                 gate_nameOut: gateName,
-                time_out: date.toLocaleTimeString()}
-            )
+                time_out: timeOut,
+                time_total: timeTotal
+            }
+        )
     }
 }

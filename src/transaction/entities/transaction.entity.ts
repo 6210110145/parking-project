@@ -25,7 +25,7 @@ export class Transaction extends BaseEntity {
 
     @CreateDateColumn({
         name: 'วันที่',
-        type: 'date'
+        type: 'date',
     })
     date: Date
 
@@ -36,16 +36,16 @@ export class Transaction extends BaseEntity {
     parking_name: string
 
     @Column({
-        name: 'ทางเข้า',
-        nullable: true
+        name: 'ทางเข้า'
     })
     gate_nameIn: string
 
     @Column({
         name: 'เวลาเข้า',
-        type: 'time without time zone'
+        //type: 'timestamp without time zone',
+        nullable: false
     })
-    time_in: string
+    time_in: Date
 
     @Column({
         name: 'ทางออก',
@@ -55,7 +55,7 @@ export class Transaction extends BaseEntity {
 
     @Column({
         name: 'เวลาออก',
-        type: 'time without time zone',
+        //type: 'timestamp without time zone',
         nullable: true
     })
     time_out: Date
