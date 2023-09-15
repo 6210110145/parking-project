@@ -5,8 +5,5 @@ import { PaymentService } from './payment.service';
 export class PaymentController {
     constructor(private paymentService: PaymentService) {}
 
-    @Post()
-    createPayment() {
-        
-    }
+    
 }

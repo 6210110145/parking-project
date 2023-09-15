@@ -91,6 +91,6 @@ export class Transaction extends BaseEntity {
     parkings: Parking[]
 
     @OneToOne(() => Payment, (payment) => payment.transaction)
-    @JoinColumn()
+    //@JoinColumn()
     payment: Payment
 }

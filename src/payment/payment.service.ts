@@ -13,4 +13,14 @@ export class PaymentService {
         const newPay = this.paymenstRepository.create(paymentDto)
         return this.paymenstRepository.save(newPay)
     }
+
+    findPaymentByLicense(license: string){
+        return this.paymenstRepository.findOne({
+            where: {
+                transaction: {
+                    car_license: license
+                }
+            }
+        })
+    }
 }

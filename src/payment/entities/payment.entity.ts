@@ -1,5 +1,6 @@
 import { Transaction } from "src/transaction/entities/transaction.entity";
 import { BaseEntity, Column, CreateDateColumn, Entity, 
+         JoinColumn, 
          OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('Payment')
@@ -12,6 +13,7 @@ export class Payment extends BaseEntity {
 
     @Column({
         name: 'ยอดเงินที่ต้องชำระ',
+        default: 0,
         nullable: true
     })
     payment_total?: number
@@ -29,5 +31,6 @@ export class Payment extends BaseEntity {
     payment_updateat: Date
 
     @OneToOne(() => Transaction, (Transaction) => Transaction.payment)
+    @JoinColumn()
     transaction: Transaction
 }

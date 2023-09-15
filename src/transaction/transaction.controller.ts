@@ -6,13 +6,16 @@ import { Cameras } from 'src/camera/camera.interface';
 import { Gate } from 'src/gate/entities/gate.entity';
 import { Parking } from 'src/parking/entities/parking.entity';
 import { ParkingService } from 'src/parking/parking.service';
+import { PaymentService } from 'src/payment/payment.service';
+import { Payment } from 'src/payment/entities/payment.entity';
 
 @Controller('transactions')
 export class TransactionController {
     constructor(
         private transactionService: TransactionService,
         private gateService: GateService,
-        private parkingService: ParkingService) {}
+        private parkingService: ParkingService,
+        private paymentService: PaymentService) {}
 
     @Post(':gate_name') // 1. transaction/{camera_id} โดย {camera_id} == Gate1,2,3,... 
                         // 2. หรือ no {camera_id} และส่ง gate_name เพิ่ม
@@ -25,6 +28,7 @@ export class TransactionController {
         let gate: Gate = await this.gateService.findGateByName(gateName)
         let parkingName: Parking = await this.parkingService.findParkingByGate(gateName)
         let transaction: Transaction = await this.transactionService.findTransactionbyLicense(transactionDto.car_license)
+        let payment: Payment = await this.paymentService.findPaymentByLicense(transactionDto.car_license)
         let timeIn: Date = new Date()
         let timeOutFree = new Date(timeIn.getTime() + (minutes * 60000))
         /*console.log(parkingName.parking_name)
