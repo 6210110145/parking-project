@@ -6,7 +6,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GateModule } from './gate/gate.module';
 import { TransactionModule } from './transaction/transaction.module';
-import { CameraModule } from './camera/camera.module';
 import { PaymentModule } from './payment/payment.module';
 
 @Module({

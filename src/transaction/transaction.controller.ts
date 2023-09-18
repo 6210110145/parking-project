@@ -28,7 +28,7 @@ export class TransactionController {
         let gate: Gate = await this.gateService.findGateByName(gateName)
         let parkingName: Parking = await this.parkingService.findParkingByGate(gateName)
         let transaction: Transaction = await this.transactionService.findTransactionbyLicense(transactionDto.car_license)
-        let payment: Payment = await this.paymentService.findPaymentByLicense(transactionDto.car_license)
+        //let payment: Payment = await this.paymentService.findPaymentByLicense(transactionDto.car_license)
         let timeIn: Date = new Date()
         let timeOutFree = new Date(timeIn.getTime() + (minutes * 60000))
         /*console.log(parkingName.parking_name)
@@ -45,8 +45,8 @@ export class TransactionController {
                 newTransaction.time_in = timeIn
                 newTransaction.time_freeAt = timeOutFree
                 
-                await this.transactionService.createTransactionIn(newTransaction)
-
+                await this.transactionService.createTransactionIn(newTransaction)   // create Transaction
+                await this.paymentService.createPayment(transactionDto.car_license) // create Payment
                 return {
                     test: true
                 }

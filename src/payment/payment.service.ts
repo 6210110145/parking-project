@@ -2,16 +2,20 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Payment } from './entities/payment.entity';
 import { Repository } from 'typeorm';
-import { PaymentDto } from './payment.dto/create-parking.dto';
+import { TransactionService } from 'src/transaction/transaction.service';
 
 @Injectable()
 export class PaymentService {
     constructor(@InjectRepository(Payment)
-        private paymenstRepository: Repository<Payment>) {}
+        private paymenstRepository: Repository<Payment>,
+        private transactionService: TransactionService) {}
 
-    createPayment(paymentDto: PaymentDto) {
-        const newPay = this.paymenstRepository.create(paymentDto)
-        return this.paymenstRepository.save(newPay)
+    async createPayment(license: string) {
+        let newPayment: Payment = new Payment()
+        newPayment.transaction = await this.transactionService.findTransactionbyLicense(license)
+        newPayment.payment_total = 0
+
+        return await this.paymenstRepository.save(newPayment)
     }
 
     findPaymentByLicense(license: string){
