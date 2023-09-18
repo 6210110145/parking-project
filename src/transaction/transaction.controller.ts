@@ -8,6 +8,7 @@ import { Parking } from 'src/parking/entities/parking.entity';
 import { ParkingService } from 'src/parking/parking.service';
 import { PaymentService } from 'src/payment/payment.service';
 import { Payment } from 'src/payment/entities/payment.entity';
+import { TransactionDto } from './transaction.dto/create-transaction.dto';
 
 @Controller('transactions')
 export class TransactionController {

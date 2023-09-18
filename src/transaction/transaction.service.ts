@@ -36,6 +36,16 @@ export class TransactionService {
         })
     }
 
+    async updateTimeFreeAt(license: string) {
+        const minutes = 30 // ไม่เกินกี่นาที ออกจากลานแล้วไม่เสียตังค์
+        let timeCurrent: Date = new Date()
+        let timeOutFree = new Date(timeCurrent.getTime() + (minutes * 60000))
+        return await this.transactionRepository.update(
+            {car_license: license},
+            {time_freeAt: timeOutFree}
+        )
+    }
+
     async updateTransactionOut(license: string, gateName: string, timeIn: Date) {
         let timeOut:Date = new Date()
         let timeTotal:number = ((timeOut.valueOf() - timeIn.valueOf()) / 60000);
@@ -53,19 +63,11 @@ export class TransactionService {
     async updateTransactionTime(license: string, timeIn: Date, CostPark: number) {
         let timeCurrent: Date = new Date()
         let timeTotal: number = ((timeCurrent.valueOf() - timeIn.valueOf()) / 60000)
-        let payTotal: number = 0
-
-        /*if(timeTotal > 30) {
-            payTotal = CostPark
-        }*/
 
         return await this.transactionRepository.update(
             {car_license: license},
             {
-                time_total: Math.ceil(timeTotal),
-                /*payment:{
-                    payment_total: payTotal
-                }*/
+                time_total: Math.ceil(timeTotal)
             }
         )
     }

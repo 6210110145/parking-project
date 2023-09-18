@@ -29,10 +29,19 @@ export class PaymentService {
         })
     }
 
-    async updatePayment(license: string, cost: number) {
+    async updatePaymentCost(license: string, cost: number) {
         const payment = await this.findPaymentByLicense(license)
         payment.payment_total = cost
 
         return await this.paymenstRepository.save(payment)
+    }
+
+    async updatePayment(license: string, type: string) {
+        const payment = await this.findPaymentByLicense(license)
+        payment.payment_total = 0
+        payment.payment_type = type
+
+        return this.transactionService.updateTimeFreeAt(license),
+            this.paymenstRepository.save(payment)
     }
 }
