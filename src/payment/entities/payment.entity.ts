@@ -13,7 +13,6 @@ export class Payment extends BaseEntity {
 
     @Column({
         name: 'ยอดเงินที่ต้องชำระ',
-        default: 0,
         nullable: false
     })
     payment_total?: number

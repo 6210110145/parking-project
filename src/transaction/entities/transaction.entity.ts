@@ -68,7 +68,7 @@ export class Transaction extends BaseEntity {
     time_out: Date
 
     @Column({
-        name: 'เวลาที่จอด',
+        name: 'เวลาที่จอด(นาที)',
         type: 'float4',
         nullable: true
     })

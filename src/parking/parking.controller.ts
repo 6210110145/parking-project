@@ -19,7 +19,7 @@ export class ParkingController {
     
     @Get(':parking_id')
     findOne(@Param('parking_id') parkingId: number) {
-    return this.parkingService.findParkingById(parkingId)
+        return this.parkingService.findParkingById(parkingId)
     }
 
     @Patch(':parking_id')   //parking/{parking_id}

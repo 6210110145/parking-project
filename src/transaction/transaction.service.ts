@@ -7,7 +7,8 @@ import { TransactionDto } from './transaction.dto/create-transaction.dto';
 @Injectable()
 export class TransactionService {
     constructor(@InjectRepository(Transaction)
-        private transactionRepository: Repository<Transaction>) {}
+        private transactionRepository: Repository<Transaction>,
+) {}
     
     async createTransactionIn(transaction: TransactionDto) {
         const newTransaction = this.transactionRepository.create(transaction)
@@ -49,5 +50,23 @@ export class TransactionService {
         )
     }
 
-    
+    async updateTransactionTime(license: string, timeIn: Date, CostPark: number) {
+        let timeCurrent: Date = new Date()
+        let timeTotal: number = ((timeCurrent.valueOf() - timeIn.valueOf()) / 60000)
+        let payTotal: number = 0
+
+        /*if(timeTotal > 30) {
+            payTotal = CostPark
+        }*/
+
+        return await this.transactionRepository.update(
+            {car_license: license},
+            {
+                time_total: Math.ceil(timeTotal),
+                /*payment:{
+                    payment_total: payTotal
+                }*/
+            }
+        )
+    }
 }

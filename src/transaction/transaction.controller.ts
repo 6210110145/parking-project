@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
 import { GateService } from 'src/gate/gate.service';
 import { Transaction } from './entities/transaction.entity';
@@ -74,6 +74,15 @@ export class TransactionController {
     async findAll() {
         let transaction = await this.transactionService.findAllTransaction()
         return transaction
+    }
+
+    @Patch(':car_license')
+    async updateTransactionTime(@Param('car_license') license: string){
+        let transaction: Transaction = await this.transactionService.findTransactionbyLicense(license)
+        let parking = await this.parkingService.findParkingByGate(transaction.gate_nameIn)
+        let Cost = parking.parking_costpermi
+        let timeIn:Date = transaction.time_in
+        return await this.transactionService.updateTransactionTime(license, timeIn, Cost)
     }
 
 }

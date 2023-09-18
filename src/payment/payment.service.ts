@@ -24,7 +24,15 @@ export class PaymentService {
                 transaction: {
                     car_license: license
                 }
-            }
+            },
+            relations: {transaction: true}
         })
+    }
+
+    async updatePayment(license: string, cost: number) {
+        const payment = await this.findPaymentByLicense(license)
+        payment.payment_total = cost
+
+        return await this.paymenstRepository.save(payment)
     }
 }
