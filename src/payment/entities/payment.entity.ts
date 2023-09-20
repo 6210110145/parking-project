@@ -1,6 +1,7 @@
 import { Transaction } from "src/transaction/entities/transaction.entity";
 import { BaseEntity, Column, CreateDateColumn, Entity, 
          JoinColumn, 
+         ManyToOne, 
          OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('Payment')
@@ -29,7 +30,6 @@ export class Payment extends BaseEntity {
     @UpdateDateColumn()
     payment_updateat: Date
 
-    @OneToOne(() => Transaction, (Transaction) => Transaction.payment)
-    @JoinColumn()
+    @ManyToOne(() => Transaction, Transaction => Transaction.payments)
     transaction: Transaction
 }

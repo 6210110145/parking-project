@@ -43,7 +43,7 @@ export class ParkingService {
                     gate_name: gateName
                 }
             },
-            //relations: {gates: true}
+            relations: {gates: true}
         })
     }
 

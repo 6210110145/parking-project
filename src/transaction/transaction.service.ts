@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Transaction } from './entities/transaction.entity';
-import { Repository} from 'typeorm';
+import { Repository, UsingJoinTableOnlyOnOneSideAllowedError} from 'typeorm';
 import { TransactionDto } from './transaction.dto/create-transaction.dto';
 
 @Injectable()
 export class TransactionService {
     constructor(@InjectRepository(Transaction)
         private transactionRepository: Repository<Transaction>,
+        //private paymentService: PaymentService
 ) {}
     
     async createTransactionIn(transaction: TransactionDto) {
@@ -30,9 +31,10 @@ export class TransactionService {
 
     async findTransactionbyLicense(license: string) {
         return await this.transactionRepository.findOne({
-            where:{
-                car_license: license
-            }
+            where: {car_license: license},
+            /*relations: {
+                payment: true
+            }*/
         })
     }
 
@@ -40,7 +42,7 @@ export class TransactionService {
         const minutes = 30 // ไม่เกินกี่นาที ออกจากลานแล้วไม่เสียตังค์
         let timeCurrent: Date = new Date()
         let timeOutFree = new Date(timeCurrent.getTime() + (minutes * 60000))
-        return await this.transactionRepository.update(
+        await this.transactionRepository.update(
             {car_license: license},
             {time_freeAt: timeOutFree}
         )
@@ -60,15 +62,28 @@ export class TransactionService {
         )
     }
 
-    async updateTransactionTime(license: string, timeIn: Date, CostPark: number) {
+    async updateTransactionTime(license: string, timeIn: Date) {
+        let transaction = await this.findTransactionbyLicense(license)
         let timeCurrent: Date = new Date()
         let timeTotal: number = ((timeCurrent.valueOf() - timeIn.valueOf()) / 60000)
+        transaction.time_total = Math.ceil(timeTotal)
 
-        return await this.transactionRepository.update(
-            {car_license: license},
-            {
-                time_total: Math.ceil(timeTotal)
+        await this.transactionRepository.save(transaction)
+        
+        return await this.transactionRepository.findOne({
+            where: {car_license: license},
+            select: {
+                car_license: true,
+                car_province: true,
+                parking_name: true,
+                time_in: true,
+                time_total: true,
+            },
+            relations:{
+                payments: true
             }
-        )
+        })
+
+        return timeTotal
     }
 }

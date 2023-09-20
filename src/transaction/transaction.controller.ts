@@ -77,13 +77,11 @@ export class TransactionController {
         return transaction
     }
 
-    @Patch(':car_license')
-    async updateTransactionTime(@Param('car_license') license: string){
+    @Get(':car_license')
+    async findTransactionByLicense(@Param('car_license') license: string) {
         let transaction: Transaction = await this.transactionService.findTransactionbyLicense(license)
-        let parking = await this.parkingService.findParkingByGate(transaction.gate_nameIn)
-        let Cost = parking.parking_costpermi
         let timeIn:Date = transaction.time_in
-        return await this.transactionService.updateTransactionTime(license, timeIn, Cost)
+        return await this.transactionService.updateTransactionTime(license, timeIn)
     }
 
 }

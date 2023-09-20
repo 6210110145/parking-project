@@ -61,18 +61,17 @@ export class Transaction extends BaseEntity {
     gate_nameOut: string
 
     @Column({
+        name: 'เวลาที่จอด(นาที)',
+        nullable: true
+    })
+    time_total: number
+
+    @Column({
         name: 'เวลาออก',
         //type: 'timestamp without time zone',
         nullable: true
     })
     time_out: Date
-
-    @Column({
-        name: 'เวลาที่จอด(นาที)',
-        type: 'float4',
-        nullable: true
-    })
-    time_total: number
 
     @CreateDateColumn({
         type: 'timestamp without time zone'
@@ -90,7 +89,6 @@ export class Transaction extends BaseEntity {
     @OneToMany(() => Parking, parking => parking.transaction)
     parkings: Parking[]
 
-    @OneToOne(() => Payment, (payment) => payment.transaction)
-    //@JoinColumn()
-    payment: Payment
+    @OneToMany(() => Payment, payment => payment.transaction)
+    payments: Payment[]
 }

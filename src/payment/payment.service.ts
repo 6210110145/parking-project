@@ -25,7 +25,9 @@ export class PaymentService {
                     car_license: license
                 }
             },
-            relations: {transaction: true}
+            relations:{
+                transaction: true
+            }
         })
     }
 
@@ -33,7 +35,9 @@ export class PaymentService {
         const payment = await this.findPaymentByLicense(license)
         payment.payment_total = cost
 
-        return await this.paymenstRepository.save(payment)
+        await this.paymenstRepository.save(payment)
+        return await this.findPaymentByLicense(license)
+        //return await this.transactionService.findTransactionbyLicense(license)
     }
 
     async updatePayment(license: string, type: string) {
@@ -41,7 +45,10 @@ export class PaymentService {
         payment.payment_total = 0
         payment.payment_type = type
 
-        return this.transactionService.updateTimeFreeAt(license),
-            this.paymenstRepository.save(payment)
+        await this.transactionService.updateTimeFreeAt(license)
+
+        await this.paymenstRepository.save(payment)
+
+        return await this.findPaymentByLicense(license)
     }
 }

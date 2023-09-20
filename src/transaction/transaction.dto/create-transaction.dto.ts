@@ -1,6 +1,7 @@
 import { IsDate, IsNotEmpty, IsString } from "class-validator"
 import { Gate } from "src/gate/entities/gate.entity"
 import { Parking } from "src/parking/entities/parking.entity"
+import { Payment } from "src/payment/entities/payment.entity"
 
 export class TransactionDto {
     @IsNotEmpty()
@@ -37,4 +38,6 @@ export class TransactionDto {
     parkings: Parking[]
 
     gates: Gate[]
+
+    //payment: Payment[]
 }
