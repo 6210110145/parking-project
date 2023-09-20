@@ -37,6 +37,12 @@ export class Parking extends BaseEntity{
     })
     parking_costpermi: number
 
+    @Column({
+        name: 'จำนวนนาทีที่ให้จอดฟรี',
+        nullable: true
+    })
+    parking_timeLimit: number
+
     @CreateDateColumn()
     createat: Date
 

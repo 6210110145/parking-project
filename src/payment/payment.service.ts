@@ -36,16 +36,18 @@ export class PaymentService {
         payment.payment_total = cost
 
         await this.paymenstRepository.save(payment)
-        return await this.findPaymentByLicense(license)
-        //return await this.transactionService.findTransactionbyLicense(license)
+        //return await this.findPaymentByLicense(license)
+        return await this.transactionService.showTransactionByLicense(license)
     }
 
-    async updatePayment(license: string, type: string) {
+    async updatePayment(license: string, type: string, timeLimit: number) {
+        let timeCurrent: Date = new Date()
         const payment = await this.findPaymentByLicense(license)
         payment.payment_total = 0
         payment.payment_type = type
+        payment.payment_time = timeCurrent
 
-        await this.transactionService.updateTimeFreeAt(license)
+        await this.transactionService.updateTimeFreeAt(license, timeLimit)
 
         await this.paymenstRepository.save(payment)
 

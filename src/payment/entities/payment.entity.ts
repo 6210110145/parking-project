@@ -22,6 +22,12 @@ export class Payment extends BaseEntity {
     })
     payment_type?: string
 
+    @Column({
+        name: 'เวลาที่ชำระ',
+        nullable: true
+    })
+    payment_time?: Date
+
     @CreateDateColumn()
     payment_createat: Date
 

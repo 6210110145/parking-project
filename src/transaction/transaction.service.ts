@@ -7,8 +7,7 @@ import { TransactionDto } from './transaction.dto/create-transaction.dto';
 @Injectable()
 export class TransactionService {
     constructor(@InjectRepository(Transaction)
-        private transactionRepository: Repository<Transaction>,
-        //private paymentService: PaymentService
+        private transactionRepository: Repository<Transaction>
 ) {}
     
     async createTransactionIn(transaction: TransactionDto) {
@@ -31,15 +30,35 @@ export class TransactionService {
 
     async findTransactionbyLicense(license: string) {
         return await this.transactionRepository.findOne({
-            where: {car_license: license},
+            where: {car_license: license}
+        })
+    }
+
+    async showTransactionByLicense(license: string) {
+        return await this.transactionRepository.find({
+            where: {
+                car_license: license
+            },
+            select: {
+                car_license: true,
+                car_province: true,
+                parking_name: true,
+                time_in: true,
+                time_total: true,
+                payments: {
+                    payment_total: true,
+                    payment_type: true,
+                    payment_time: true
+                }
+            },
             /*relations: {
-                payment: true
+                payments: true
             }*/
         })
     }
 
-    async updateTimeFreeAt(license: string) {
-        const minutes = 30 // ไม่เกินกี่นาที ออกจากลานแล้วไม่เสียตังค์
+    async updateTimeFreeAt(license: string, timeLimit: number) {
+        const minutes = timeLimit // ไม่เกินกี่นาที ออกจากลานแล้วไม่เสียตังค์
         let timeCurrent: Date = new Date()
         let timeOutFree = new Date(timeCurrent.getTime() + (minutes * 60000))
         await this.transactionRepository.update(
@@ -70,19 +89,7 @@ export class TransactionService {
 
         await this.transactionRepository.save(transaction)
         
-        return await this.transactionRepository.findOne({
-            where: {car_license: license},
-            select: {
-                car_license: true,
-                car_province: true,
-                parking_name: true,
-                time_in: true,
-                time_total: true,
-            },
-            /*relations:{
-                payments: true
-            }*/
-        })
+        return await this.showTransactionByLicense(license)
 
         return timeTotal
     }

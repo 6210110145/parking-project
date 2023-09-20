@@ -30,6 +30,7 @@ export class ParkingController {
         parking.parking_name = parkingDto.parking_name,
         parking.parking_total = parkingDto.parking_total,
         parking.parking_costpermi = parkingDto.parking_costpermi
+        parking.parking_timeLimit = parkingDto.parking_timeLimit
 
         return await this.parkingService.createParking(parking)
     }

@@ -8,6 +8,8 @@ export class PaymentDto {
 
     payment_type?: string
 
+    payment_time?: Date
+
     /*
     payment_in?: number
 
