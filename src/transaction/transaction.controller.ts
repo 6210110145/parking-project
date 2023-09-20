@@ -29,7 +29,6 @@ export class TransactionController {
         let gate: Gate = await this.gateService.findGateByName(gateName)
         let parkingName: Parking = await this.parkingService.findParkingByGate(gateName)
         let transaction: Transaction = await this.transactionService.findTransactionbyLicense(transactionDto.car_license)
-        //let payment: Payment = await this.paymentService.findPaymentByLicense(transactionDto.car_license)
         let timeIn: Date = new Date()
         let timeOutFree = new Date(timeIn.getTime() + (minutes * 60000))
         /*console.log(parkingName.parking_name)
@@ -56,7 +55,19 @@ export class TransactionController {
             }        
         }
         if(gate.gate_type == 'out') {
-            if(transaction != null){ //if == null รถคนนั้นไม่ได้จอดแต่แรก
+            let timeCurrent: Date = new Date()
+            let timeFree: Date = transaction.time_freeAt
+            let payment: Payment = await this.paymentService.findPaymentByLicense(transactionDto.car_license)
+            if(transaction != null && timeCurrent < timeFree){ //if == null รถคนนั้นไม่ได้จอดแต่แรก
+                await this.transactionService.updateTransactionOut(
+                    transactionDto.car_license,
+                    gate.gate_name,
+                    transaction.time_in)
+                    
+                return {
+                    test: true
+                }
+            }else if(payment.payment_total == 0) {
                 await this.transactionService.updateTransactionOut(
                     transactionDto.car_license,
                     gate.gate_name,
@@ -66,7 +77,7 @@ export class TransactionController {
                     test: true
                 }
             }else {
-                return `This ${transactionDto.car_license} have not parked`
+                return "Something wrong"
             }
         }
     }

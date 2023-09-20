@@ -1,8 +1,6 @@
 import { Transaction } from "src/transaction/entities/transaction.entity";
 import { BaseEntity, Column, CreateDateColumn, Entity, 
-         JoinColumn, 
-         ManyToOne, 
-         OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+         ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('Payment')
 export class Payment extends BaseEntity {

@@ -79,9 +79,9 @@ export class TransactionService {
                 time_in: true,
                 time_total: true,
             },
-            relations:{
+            /*relations:{
                 payments: true
-            }
+            }*/
         })
 
         return timeTotal

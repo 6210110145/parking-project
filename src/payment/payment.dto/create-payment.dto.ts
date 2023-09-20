@@ -17,4 +17,6 @@ export class PaymentDto {
     payment_createat: Date
 
     payment_updateat: Date
+
+    transaction_id: number
 }
