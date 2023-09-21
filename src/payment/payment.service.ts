@@ -14,6 +14,7 @@ export class PaymentService {
     async createPayment(license: string) {
         let newPayment: Payment = new Payment()
         newPayment.payment_total = 0
+        newPayment.transaction = await this.transactionService.findTransactionbyLicense(license)
 
         return await this.paymenstRepository.save(newPayment)
     }
@@ -24,10 +25,7 @@ export class PaymentService {
                 transaction: {
                     car_license: license
                 }
-            },
-            /*relations:{
-                transaction: true
-            }*/
+            }
         })
     }
 
@@ -63,7 +61,7 @@ export class PaymentService {
         payment.payment_time = timeCurrent
 
         let check:boolean = await this.transactionService.updateTimeFreeAt(license, timeLimit)
-        
+
         if(check == true){
             await this.paymenstRepository.save(payment)
         }else {

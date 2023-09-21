@@ -76,7 +76,8 @@ export class TransactionController {
                     transaction.time_in)
                     
                 return {
-                    test: true
+                    test: true,
+                    Text: "Pass"
                 }
             }else {
                 return "Something is wrong"

@@ -82,6 +82,7 @@ export class TransactionService {
         )
     }
 
+    //update only time_total
     async updateTransactionTime(license: string, timeIn: Date) {
         let transaction = await this.findTransactionbyLicense(license)
         let timeCurrent: Date = new Date()
