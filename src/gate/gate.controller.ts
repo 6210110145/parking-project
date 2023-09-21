@@ -35,7 +35,7 @@ export class GateController {
     
     @Patch(':gate_id')    //gate/{gate_id}
     async update(@Param('gate_id') gateId: number, 
-           @Body() updateGateDto: UpdateGateDto
+                 @Body() updateGateDto: UpdateGateDto
     ) {
         const gate = await this.gateService.findGateById(gateId)
         gate.gate_name = updateGateDto.gate_name,

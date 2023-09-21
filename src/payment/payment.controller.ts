@@ -33,7 +33,7 @@ export class PaymentController {
         
         let parking = await this.parkingService.findParkingByGate(transaction.gate_nameIn)
         let cost: number = parking.parking_costpermi // 50 บาท/ 30 นาที
-        let timeLimit: number = parking.parking_Limit // 30 นาที
+        let timeLimit: number = parking.parking_timeLimit // 30 นาที
 
         let payTotal: number = 0
         console.log(payment.payment_type)
@@ -67,7 +67,7 @@ export class PaymentController {
     async updatePayment(@Body() payment: PaymentDto, @Body() transaction: Cameras) {
         let transactions: Transaction = await this.transactionService.findTransactionbyLicense(transaction.car_license)
         let parking = await this.parkingService.findParkingByGate(transactions.gate_nameIn)
-        let timeLimit: number = parking.parking_Limit // 30 นาที
+        let timeLimit: number = parking.parking_timeLimit // 30 นาที
         //console.log(timeLimit)
         
         const type: string = payment.payment_type

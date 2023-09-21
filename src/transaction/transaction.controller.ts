@@ -27,7 +27,7 @@ export class TransactionController {
         let gate: Gate = await this.gateService.findGateByName(gateName)
         let parking: Parking = await this.parkingService.findParkingByGate(gateName)
         let transaction: Transaction = await this.transactionService.findTransactionbyLicense(transactionDto.car_license)
-        let timeLimit: number = parking.parking_Limit // เวลาจอดที่ออกจากลานแล้วไม่เสียตังค์
+        let timeLimit: number = parking.parking_timeLimit // เวลาจอดที่ออกจากลานแล้วไม่เสียตังค์
         let timeIn: Date = new Date()
         let timeOutFree = new Date(timeIn.getTime() + (timeLimit * 60000))  //mSecond
         /*console.log(parkingName.parking_name)
