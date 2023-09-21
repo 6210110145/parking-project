@@ -14,13 +14,13 @@ export class Gate extends BaseEntity {
 
     @Column({
         name: 'name',
-        nullable: true
+        nullable: false
     })
     gate_name: string
 
     @Column({
         name: 'in-out',
-        nullable: true
+        nullable: false
     })
     gate_type: string
 

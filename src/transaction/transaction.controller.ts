@@ -29,11 +29,11 @@ export class TransactionController {
         let transaction: Transaction = await this.transactionService.findTransactionbyLicense(transactionDto.car_license)
         let timeLimit: number = parking.parking_timeLimit // เวลาจอดที่ออกจากลานแล้วไม่เสียตังค์
         let timeIn: Date = new Date()
-        let timeOutFree = new Date(timeIn.getTime() + (timeLimit * 60000))  //mSecond
-        /*console.log(parkingName.parking_name)
+        let timeOutFree = new Date(timeIn.getTime() + (timeLimit * 60000))  // + n minutes
+        /*console.log(parking.parking_name)
         console.log(gate.gate_type)
         console.log(parking.parking_name)
-        console.log(parking.parking_Limit)*/
+        console.log(parking.parking_timeLimit)*/
         
         if (gate.gate_type == "in") { 
             if((transaction == null) || 
@@ -49,7 +49,8 @@ export class TransactionController {
                 await this.transactionService.createTransactionIn(newTransaction)   // create Transaction
                 await this.paymentService.createPayment(transactionDto.car_license) // create Payment
                 return {
-                    test: true
+                    test: true,
+                    Text: "Pass"
                 }
             }else {
                 return `This car ${transactionDto.car_license} is parking But not Exit`

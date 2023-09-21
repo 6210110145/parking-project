@@ -57,14 +57,15 @@ export class TransactionService {
         })
     }
 
+    //update time_out_free after payment
     async updateTimeFreeAt(license: string, timeLimit: number) {
-        const minutes = timeLimit // ไม่เกินกี่นาที ออกจากลานแล้วไม่เสียตังค์
         let timeCurrent: Date = new Date()
-        let timeOutFree = new Date(timeCurrent.getTime() + (minutes * 60000))
-        await this.transactionRepository.update(
-            {car_license: license},
+        let timeOutFree = new Date(timeCurrent.getTime() + (timeLimit * 60000))
+        await this.transactionRepository.update({car_license: license},
             {time_freeAt: timeOutFree}
         )
+
+        return true
     }
 
     async updateTransactionOut(license: string, gateName: string, timeIn: Date) {
@@ -89,8 +90,8 @@ export class TransactionService {
 
         await this.transactionRepository.save(transaction)
         
-        return await this.showTransactionByLicense(license)
+        //return await this.showTransactionByLicense(license)
 
-        return timeTotal
+        return true
     }
 }
