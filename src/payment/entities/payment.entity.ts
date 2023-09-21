@@ -11,19 +11,19 @@ export class Payment extends BaseEntity {
     payment_id: number
 
     @Column({
-        name: 'ยอดเงินที่ต้องชำระ',
+        name: 'total',
         nullable: false
     })
     payment_total?: number
 
     @Column({
-        name: 'รูปแบบที่ชำระ',
+        name: 'type',
         nullable: true
     })
     payment_type?: string
 
     @Column({
-        name: 'เวลาที่ชำระ',
+        name: 'payment_time',
         nullable: true
     })
     payment_time?: Date

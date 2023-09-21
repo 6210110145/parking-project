@@ -35,7 +35,7 @@ export class TransactionService {
     }
 
     async showTransactionByLicense(license: string) {
-        return await this.transactionRepository.find({
+        return await this.transactionRepository.findOne({
             where: {
                 car_license: license
             },

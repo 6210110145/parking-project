@@ -25,26 +25,26 @@ export class TransactionController {
     ) {
         //let gate: Gate = await this.gateService.findGateByName(transactionDto.gate_name)
         let gate: Gate = await this.gateService.findGateByName(gateName)
-        let parkingName: Parking = await this.parkingService.findParkingByGate(gateName)
+        let parking: Parking = await this.parkingService.findParkingByGate(gateName)
         let transaction: Transaction = await this.transactionService.findTransactionbyLicense(transactionDto.car_license)
-        let timeLimit: number = parkingName.parking_timeLimit // เวลาจอดที่ออกจากลานแล้วไม่เสียตังค์
+        let timeLimit: number = parking.parking_Limit // เวลาจอดที่ออกจากลานแล้วไม่เสียตังค์
         let timeIn: Date = new Date()
-        let timeOutFree = new Date(timeIn.getTime() + (timeLimit * 60000))
+        let timeOutFree = new Date(timeIn.getTime() + (timeLimit * 60000))  //mSecond
         /*console.log(parkingName.parking_name)
         console.log(gate.gate_type)
-        console.log(timeIn)*/
+        console.log(parking.parking_name)
+        console.log(parking.parking_Limit)*/
         
-        if (gate.gate_type == "in") {
+        if (gate.gate_type == "in") { 
             if((transaction == null) || 
-               (transaction != null && transaction.time_out != null)) { //if ==null คือ ยังไม่มีป้ายนี้เข้า => เข้าได้
+               (transaction != null && transaction.time_out != null)) { //เข้าได้เมื่อ ไม่มีข้อมูลใน transaction หรือมีแต่ออกจากที่จอดรถ
                 let newTransaction: Transaction = new Transaction()
                 newTransaction.gate_nameIn = gate.gate_name
                 newTransaction.car_license = transactionDto.car_license
                 newTransaction.car_province = transactionDto.car_province
-                newTransaction.parking_name = parkingName.parking_name
+                newTransaction.parking_name = parking.parking_name
                 newTransaction.time_in = timeIn
                 newTransaction.time_freeAt = timeOutFree
-                newTransaction.payments
                 
                 await this.transactionService.createTransactionIn(newTransaction)   // create Transaction
                 await this.paymentService.createPayment(transactionDto.car_license) // create Payment
@@ -89,8 +89,10 @@ export class TransactionController {
         return transaction
     }
 
-    @Get(':car_license')
-    async findTransactionByLicense(@Param('car_license') license: string) {
+    @Get(":car_license")
+    async findTransactionByLicense(@Param('car_license') license: string,
+                                   //@Body() transactionDto: Cameras
+                                   ) {
         let transaction: Transaction = await this.transactionService.findTransactionbyLicense(license)
         let timeIn:Date = transaction.time_in
         return await this.transactionService.updateTransactionTime(license, timeIn)

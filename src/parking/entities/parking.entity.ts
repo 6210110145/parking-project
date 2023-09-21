@@ -18,7 +18,7 @@ export class Parking extends BaseEntity{
     parking_name: string
 
     @Column({
-        name: 'จำนวนช่องทั้งหมด',
+        name: 'total_slot',
         type: "integer",
         nullable: false
     })
@@ -32,16 +32,17 @@ export class Parking extends BaseEntity{
     parking_notEmpty: number
     */
     @Column({
-        name: 'ค่าจอด(บาท/30 นาที)',
+        name: 'parking_fee',
         nullable: false
     })
     parking_costpermi: number
 
     @Column({
-        name: 'จำนวนนาทีที่ให้จอดฟรี',
-        nullable: true
+        name: 'timefree',
+        type: "integer",
+        nullable: false,
     })
-    parking_timeLimit: number
+    parking_Limit: number
 
     @CreateDateColumn()
     createat: Date
@@ -51,7 +52,7 @@ export class Parking extends BaseEntity{
 
     @OneToMany(() => Gate, gates => gates.parking)
     gates: Gate[]
-
+    
     @ManyToOne(() => Transaction, transaction => transaction.parkings)
     transaction: Transaction
 }

@@ -13,61 +13,61 @@ export class Transaction extends BaseEntity {
     transaction_id: number
     
     @Column({
-        name: 'เลขทะเบียน',
+        name: 'car_license',
         nullable: false
     })
     car_license: string
 
     @Column({
-        name: 'จังหวัด',
+        name: 'car_province',
         nullable: false
     })
     car_province: string
 
     @CreateDateColumn({
-        name: 'วันที่',
+        name: 'parking_date',
         type: 'date',
     })
     date: Date
 
     @Column({
-        name: 'ลานจอด',
+        name: 'parking_name',
         nullable: true
     })
     parking_name: string
 
     @Column({
-        name: 'ทางเข้า'
+        name: 'gate_name_in'
     })
     gate_nameIn: string
 
     @Column({
-        name: 'เวลาเข้า',
+        name: 'time_in',
         //type: 'timestamp without time zone',
         nullable: false
     })
     time_in: Date
 
     @Column({
-        name: 'เวลาออก(ฟรี)',
+        name: 'time_out_free',
         nullable: true
     })
     time_freeAt ?: Date
 
     @Column({
-        name: 'ทางออก',
+        name: 'time_out',
         nullable: true
     })
     gate_nameOut: string
 
     @Column({
-        name: 'เวลาที่จอด(นาที)',
+        name: 'time_total',
         nullable: true
     })
     time_total: number
 
     @Column({
-        name: 'เวลาออก',
+        name: 'time_out',
         //type: 'timestamp without time zone',
         nullable: true
     })
@@ -85,9 +85,10 @@ export class Transaction extends BaseEntity {
 
     @OneToMany(() => Gate, gates => gates.transaction)
     gates: Gate[]
-
+    
     @OneToMany(() => Parking, parking => parking.transaction)
     parkings: Parking[]
+    
 
     @OneToMany(() => Payment, payment => payment.transaction)
     payments: Payment[]

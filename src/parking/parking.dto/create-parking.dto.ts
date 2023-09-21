@@ -16,7 +16,7 @@ export class ParkingDto {
     parking_costpermi: number
 
     @IsNotEmpty()
-    parking_timeLimit: number
+    parking_Limit: number
     /*
     @IsNotEmpty()
     parking_notEmpty: number

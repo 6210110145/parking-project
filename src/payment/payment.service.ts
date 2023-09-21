@@ -25,9 +25,9 @@ export class PaymentService {
                     car_license: license
                 }
             },
-            relations:{
+            /*relations:{
                 transaction: true
-            }
+            }*/
         })
     }
 
@@ -51,6 +51,6 @@ export class PaymentService {
 
         await this.paymenstRepository.save(payment)
 
-        return await this.findPaymentByLicense(license)
+        return await this.transactionService.showTransactionByLicense(license)
     }
 }

@@ -30,8 +30,7 @@ import { PaymentModule } from './payment/payment.module';
     ParkingModule,
     GateModule,
     TransactionModule,
-    PaymentModule,
-    //CameraModule
+    PaymentModule
   ],
   controllers: [AppController],
   providers: [AppService],
