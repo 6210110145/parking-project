@@ -12,21 +12,21 @@ export class Payment extends BaseEntity {
 
     @Column({
         name: 'total',
-        nullable: false
+        nullable: true
     })
-    payment_total?: number
+    payment_total: number
 
     @Column({
         name: 'type',
         nullable: true
     })
-    payment_type?: string
+    payment_type: string
 
     @Column({
         name: 'payment_time',
         nullable: true
     })
-    payment_time?: Date
+    payment_time: Date
 
     @CreateDateColumn()
     payment_createat: Date

@@ -53,4 +53,9 @@ export class PaymentService {
 
         return await this.transactionService.showTransactionByLicense(license)
     }
+
+    async removePayment(license: string) {
+        let payment: Payment = await this.findPaymentByLicense(license)
+        return await this.paymenstRepository.delete(payment.payment_id)
+    }
 }

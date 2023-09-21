@@ -4,11 +4,11 @@ export class PaymentDto {
     @IsNotEmpty()
     payment_id: number
 
-    payment_total?: number
+    payment_total: number
 
-    payment_type?: string
+    payment_type: string
 
-    payment_time?: Date
+    payment_time: Date
 
     /*
     payment_in?: number

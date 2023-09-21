@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { Transaction } from 'src/transaction/entities/transaction.entity';
 import { TransactionService } from 'src/transaction/transaction.service';
@@ -72,6 +72,11 @@ export class PaymentController {
         
         const type: string = payment.payment_type
         return this.paymentService.updatePayment(transaction.car_license, type, timeLimit)
+    }
+
+    @Delete(':car_license')
+    removePayment(@Param('car_license') license: string) {
+        return this.paymentService.removePayment(license)
     }
 
 }

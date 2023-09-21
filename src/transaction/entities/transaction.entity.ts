@@ -1,8 +1,8 @@
 import { Gate } from "src/gate/entities/gate.entity";
 import { Parking } from "src/parking/entities/parking.entity";
 import { Payment } from "src/payment/entities/payment.entity";
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, OneToMany, 
-         OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, OneToMany, 
+        PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('Transaction')
 export class Transaction extends BaseEntity {
@@ -14,13 +14,13 @@ export class Transaction extends BaseEntity {
     
     @Column({
         name: 'car_license',
-        nullable: false
+        nullable: true
     })
     car_license: string
 
     @Column({
         name: 'car_province',
-        nullable: false
+        nullable: true
     })
     car_province: string
 
@@ -37,14 +37,15 @@ export class Transaction extends BaseEntity {
     parking_name: string
 
     @Column({
-        name: 'gate_name_in'
+        name: 'gate_name_in',
+        nullable: true
     })
     gate_nameIn: string
 
     @Column({
         name: 'time_in',
         //type: 'timestamp without time zone',
-        nullable: false
+        nullable: true
     })
     time_in: Date
 
@@ -52,10 +53,10 @@ export class Transaction extends BaseEntity {
         name: 'time_out_free',
         nullable: true
     })
-    time_freeAt ?: Date
+    time_freeAt : Date
 
     @Column({
-        name: 'time_out',
+        name: 'gate_name_out',
         nullable: true
     })
     gate_nameOut: string

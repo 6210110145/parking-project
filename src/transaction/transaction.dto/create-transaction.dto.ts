@@ -13,21 +13,21 @@ export class TransactionDto {
     @IsString()
     car_province: string
     
-    date?: Date
+    date: Date
 
-    parking_name?: string
+    parking_name: string
 
-    gate_nameIn?: string
+    gate_nameIn: string
 
-    time_in?: Date
+    time_in: Date
 
-    time_freeAt ?: Date
+    time_freeAt : Date
 
-    gate_nameOut?: string
+    gate_nameOut: string
 
-    time_out?: Date
+    time_out: Date
 
-    time_total?: number
+    time_total: number
 
     @IsDate()
     transaction_createat: Date

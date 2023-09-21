@@ -13,14 +13,14 @@ export class Parking extends BaseEntity{
 
     @Column({
         name: 'name',
-        nullable: false
+        nullable: true
     })
     parking_name: string
 
     @Column({
         name: 'total_slot',
         type: "integer",
-        nullable: false
+        nullable: true
     })
     parking_total: number
     /*
@@ -33,14 +33,14 @@ export class Parking extends BaseEntity{
     */
     @Column({
         name: 'parking_fee',
-        nullable: false
+        nullable: true
     })
     parking_costpermi: number
 
     @Column({
         name: 'timefree',
         type: "integer",
-        nullable: false,
+        nullable: true
     })
     parking_Limit: number
 
