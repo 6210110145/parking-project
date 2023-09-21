@@ -12,11 +12,11 @@ export class GateService {
         private gateRepository: Repository<Gate>,
         private pakingService: ParkingService) {}
 
-    async createGate(gateDto: GateDto, parking_id: number) {
+    async createGate(gateDto: GateDto, parkingName: string) {
         let newGate: Gate = new Gate()
         newGate.gate_name = gateDto.gate_name,
         newGate.gate_type = gateDto.gate_type,
-        newGate.parking = await this.pakingService.findParkingById(parking_id)
+        newGate.parking = await this.pakingService.findParkingByName(parkingName)
 
         return await this.gateRepository.save(newGate)
     }
@@ -40,8 +40,7 @@ export class GateService {
         return await this.gateRepository.findOne({
             where: {
                 gate_name: gateName,
-            },
-            //select: {gate_type: true}
+            }
         })
     }
 

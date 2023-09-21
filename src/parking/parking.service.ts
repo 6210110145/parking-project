@@ -36,6 +36,14 @@ export class ParkingService {
         }
     }
 
+    async findParkingByName(parkingName: string) {
+        return await this.parkingRepository.findOne({
+            where:{
+                parking_name: parkingName
+            }
+        })
+    }
+
     findParkingByGate(gateName: string) {
         return this.parkingRepository.findOne({
             where: {
@@ -46,11 +54,6 @@ export class ParkingService {
             //relations: {gates: true}
         })
     }
-
-    /*
-    async updateParking(parkingDto: ParkingDto, parkingId: number) {
-        return await this.parkingRepository.update(parkingId, parkingDto)
-    } */
 
     async removeParking(parkingId: number) {
         try {

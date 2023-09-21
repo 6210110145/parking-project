@@ -12,10 +12,10 @@ export class GateController {
     // createTransaction when license do not insert in Transaction
     // updateTransaction when license is inserted in Transaction
 
-    @Post(':parking_id')    //gate/{parking_id}
+    @Post(':parking_name')    //gate/{parking_id}
     createGate(@Body() gateDto: GateDto, 
-               @Param('parking_id') parking_id: number) {
-        return this.gateService.createGate(gateDto, Number(parking_id))
+               @Param('parking_name') parkingName: string) {
+        return this.gateService.createGate(gateDto, parkingName)
     }
 
     @Get()
