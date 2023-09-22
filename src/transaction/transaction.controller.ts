@@ -69,7 +69,7 @@ export class TransactionController {
                 return {
                     test: true
                 }
-            }else if(payment.payment_total == 0) {
+            }/*else if(payment.payment_total == 0) {
                 await this.transactionService.updateTransactionOut(
                     transactionDto.car_license,
                     gate.gate_name,
@@ -79,7 +79,7 @@ export class TransactionController {
                     test: true,
                     Text: "Pass"
                 }
-            }else {
+            }*/else {
                 return "Something is wrong"
             }
         }

@@ -34,10 +34,8 @@ export class PaymentController {
         let timeLimit: number = parking.parking_timeLimit // 30 นาที
 
         let payTotal: number = 0
-        console.log(String(payment.payment_type))
         if(check == true){
-            console.log(transaction.time_total)
-            
+            //console.log(transaction.time_total)
             //อัตราส่วนราคาจอดทั้งหมด **ขึ้นอยู่กับแต่ะละที่
             if (payment.payment_type == null) { // ยังไม่จ่าย
                 if (transaction.time_total > timeLimit) { // เวลาจอดทั้งหมดเกินจากเวลาไม่จ่าย
