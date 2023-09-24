@@ -90,7 +90,7 @@ export class TransactionController {
         let transaction = await this.transactionService.findAllTransaction()
         return transaction
     }
-
+    /*
     @Get(":car_license")
     async findTransactionByLicense(@Param('car_license') license: string,
                                    //@Body() transactionDto: Cameras
@@ -98,6 +98,11 @@ export class TransactionController {
         let transaction: Transaction = await this.transactionService.findTransactionbyLicense(license)
         let timeIn:Date = transaction.time_in
         return await this.transactionService.updateTransactionTime(license, timeIn)
+    }*/
+
+    @Get(':car_license')
+    async findTransaction(@Param('car_license') license: string) {
+        return await this.transactionService.findTransactionbyLicense(license)
     }
 }
 

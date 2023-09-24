@@ -93,6 +93,6 @@ export class TransactionService {
         
         //return await this.showTransactionByLicense(license)
 
-        return true
+        return timeTotal
     }
 }

@@ -27,14 +27,15 @@ export class PaymentController {
         let timeCurrent: Date = new Date()
         let timeIn: Date = transaction.time_in
         let timeFree: Date = transaction.time_freeAt
-        let check:boolean = await this.transactionService.updateTransactionTime(license, timeIn)
+        //let check:boolean = 
+        //let timeToatal:number = await this.transactionService.updateTransactionTime(license, timeIn)
         
         let parking = await this.parkingService.findParkingByGate(transaction.gate_nameIn)
         let cost: number = parking.parking_costpermi // 50 บาท/ 30 นาที
         let timeLimit: number = parking.parking_timeLimit // 30 นาที
 
         let payTotal: number = 0
-        if(check == true){
+        /*if(check == true){
             //console.log(transaction.time_total)
             //อัตราส่วนราคาจอดทั้งหมด **ขึ้นอยู่กับแต่ะละที่
             if (payment.payment_type == null) { // ยังไม่จ่าย
@@ -57,9 +58,26 @@ export class PaymentController {
             }
         }else {
             return false
+        }*/
+
+        if(timeCurrent.valueOf() > timeFree.valueOf()) {
+            let timeToatal:number = await this.transactionService.updateTransactionTime(license, timeIn)
+            console.log(timeToatal)
+            if(payment.payment_type == null) {
+                payTotal = ((timeToatal * cost) / timeLimit)
+                return await this.paymentService.updatePaymentCost(license, Math.ceil(payTotal))
+            }else {
+                let newPaymentTime: Date = payment.payment_time
+                let newTimeTotal: number = ((timeCurrent.valueOf() - newPaymentTime.valueOf()) / 60000)
+                //console.log(newTimeTotal)
+                payTotal = ((newTimeTotal * cost) / timeLimit)
+                return await this.paymentService.updatePaymentCost(license, Math.ceil(payTotal))
+            }
+        }else {
+            return await this.paymentService.updatePaymentCost(license, 0)
         }
        
-        return await this.paymentService.updatePaymentCost(license, Math.ceil(payTotal))
+        //return await this.paymentService.updatePaymentCost(license, Math.ceil(payTotal))
         
     }
 
