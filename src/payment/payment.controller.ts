@@ -59,11 +59,10 @@ export class PaymentController {
         }else {
             return false
         }*/
-
+        let timeToatal:number = await this.transactionService.updateTransactionTime(license, timeIn)
         if(timeCurrent.valueOf() > timeFree.valueOf()) {
-            let timeToatal:number = await this.transactionService.updateTransactionTime(license, timeIn)
             console.log(timeToatal)
-            if(payment.payment_type == null) {
+            if(payment.payment_type == "null") {
                 payTotal = ((timeToatal * cost) / timeLimit)
                 return await this.paymentService.updatePaymentCost(license, Math.ceil(payTotal))
             }else {
@@ -75,10 +74,12 @@ export class PaymentController {
             }
         }else {
             return await this.paymentService.updatePaymentCost(license, 0)
-        }
-       
-        //return await this.paymentService.updatePaymentCost(license, Math.ceil(payTotal))
-        
+        }        
+    }
+
+    @Get('/pay/:car_license')
+    async showWhenPayment(@Param('car_license') license: string) {
+        return await this.paymentService.showWhenPayment(license) 
     }
 
     @Put() // update after payment
