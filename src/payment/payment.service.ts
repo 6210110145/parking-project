@@ -38,6 +38,7 @@ export class PaymentService {
             "province" : transaction.car_province,
             "parking" : transaction.parking_name,
             "time_in": transaction.time_in.toLocaleString(),
+            "time_out_free": transaction.time_freeAt.toLocaleString(),
             "time_total" : transaction.time_total + " minutes", 
             "cost_total" : payment.payment_total + " Baht",
             "payment_type": payment.payment_type
