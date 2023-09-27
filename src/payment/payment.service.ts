@@ -62,7 +62,16 @@ export class PaymentService {
         payment.payment_total = cost
 
         await this.paymenstRepository.save(payment)
-        //return await this.transactionService.showTransactionByLicense(license)
+        return await this.showPayment(license)
+    }
+
+    async updatePaymentCostRepeat(license: string, cost: number) {
+        const payment = await this.findPaymentByLicense(license)
+        
+        payment.payment_total = cost
+        payment.payment_type = "null"
+
+        await this.paymenstRepository.save(payment)
         return await this.showPayment(license)
     }
 
