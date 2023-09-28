@@ -15,7 +15,7 @@ export class PaymentService {
         let newPayment: Payment = new Payment()
         newPayment.payment_total = 0
         newPayment.payment_type = "null"
-        newPayment.transaction = await this.transactionService.findTransactionbyLicense(license)
+        newPayment.transaction = await this.transactionService.findTransactionbyLicenseV2(license)
 
         return await this.paymenstRepository.save(newPayment)
     }
@@ -58,10 +58,9 @@ export class PaymentService {
 
     async updatePaymentCost(license: string, cost: number) {
         const payment = await this.findPaymentByLicense(license)
-        
         payment.payment_total = cost
-
         await this.paymenstRepository.save(payment)
+        
         return await this.showPayment(license)
     }
 

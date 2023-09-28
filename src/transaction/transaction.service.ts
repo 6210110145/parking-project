@@ -24,17 +24,28 @@ export class TransactionService {
         return await this.transactionRepository.findOne({
             where: { 
                 transaction_id: transactionId
+            },
+            relations: {
+                payments: true
             }
         })
     }
 
     async findTransactionbyLicense(license: string) {
         return await this.transactionRepository.findOne({
-            where: {car_license: license}
+            where: {
+                car_license: license,}
         })
     }
 
-    async showTransactionByLicense(license: string) {
+    async findTransactionbyLicenseV2(license: string) {
+        return await this.transactionRepository.findOneBy({
+            car_license: license,
+            gate_nameOut: "null"}
+        )
+    }
+
+    /*async showTransactionByLicense(license: string) {
         return await this.transactionRepository.findOne({
             where: {
                 car_license: license
@@ -51,11 +62,11 @@ export class TransactionService {
                     payment_time: true
                 }
             },
-            /*relations: {
+            relations: {
                 payments: true
-            }*/
+            }
         })
-    }
+    }*/
 
     //update time_out_free after payment
     async updateTimeFreeAt(license: string, timeLimit: number) {
@@ -89,10 +100,10 @@ export class TransactionService {
         let timeTotal: number = ((timeCurrent.valueOf() - timeIn.valueOf()) / 60000)
         transaction.time_total = Math.ceil(timeTotal)
 
-        await this.transactionRepository.save(transaction)
-        
-        //return await this.showTransactionByLicense(license)
+        await this.transactionRepository.save(transaction)        
+            //return await this.showTransactionByLicense(license)
 
         return timeTotal
+        
     }
 }

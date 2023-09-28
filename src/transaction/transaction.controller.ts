@@ -37,7 +37,7 @@ export class TransactionController {
         
         if (gate.gate_type == "in") { 
             if((transaction == null) || 
-               (transaction != null && transaction.time_out != null)) { //เข้าได้เมื่อ ไม่มีข้อมูลใน transaction หรือมีแต่ออกจากที่จอดรถ
+               (transaction != null && transaction.time_out != null)) { //เข้าได้เมื่อ ไม่มีข้อมูลใน transaction หรือมีแต่ออกจากที่จอดรถแล้ว
                 let newTransaction: Transaction = new Transaction()
                 newTransaction.gate_nameIn = gate.gate_name
                 newTransaction.car_license = transactionDto.car_license
@@ -45,6 +45,7 @@ export class TransactionController {
                 newTransaction.parking_name = parking.parking_name
                 newTransaction.time_in = timeIn
                 newTransaction.time_freeAt = timeOutFree
+                newTransaction.gate_nameOut = "null"
                 
                 await this.transactionService.createTransactionIn(newTransaction)   // create Transaction
                 await this.paymentService.createPayment(transactionDto.car_license) // create Payment
@@ -60,7 +61,7 @@ export class TransactionController {
             let timeCurrent: Date = new Date()
             let timeFree: Date = transaction.time_freeAt
             let payment: Payment = await this.paymentService.findPaymentByLicense(transactionDto.car_license)
-            if((transaction != null) && (timeCurrent.valueOf() < timeFree.valueOf())){ //if == null รถคนนั้นไม่ได้จอดแต่แรก
+            if((transaction != null) && (timeCurrent.valueOf() < timeFree.valueOf())){ // ออกได้ ถ้าไม่เกินเวลาออกฟรี และ
                 await this.transactionService.updateTransactionOut(
                     transactionDto.car_license,
                     gate.gate_name,
@@ -90,6 +91,11 @@ export class TransactionController {
         let transaction = await this.transactionService.findAllTransaction()
         return transaction
     }
+
+    @Get('/id/:transaction_id')
+    async findTransactionByID(@Param('transaction_id') id: number) {
+        return await this.transactionService.findTransactionById(id)
+    }
     /*
     @Get(":car_license")
     async findTransactionByLicense(@Param('car_license') license: string,
@@ -102,7 +108,7 @@ export class TransactionController {
 
     @Get(':car_license')
     async findTransaction(@Param('car_license') license: string) {
-        return await this.transactionService.findTransactionbyLicense(license)
+        return await this.transactionService.findTransactionbyLicenseV2(license)
     }
 }
 
