@@ -17,7 +17,7 @@ export class PaymentController {
     @Get(':car_license') //update cost_totall
     async updatePaymentCost(@Param('car_license') license: string) {
         let payment: Payment = await this.paymentService.findPaymentByLicense(license)
-        let transaction: Transaction = await this.transactionService.findTransactionbyLicense(license)
+        let transaction: Transaction = await this.transactionService.findTransactionbyLicenseV2(license)
         let timeCurrent: Date = new Date()
         let timeIn: Date = transaction.time_in
         let timeFree: Date = transaction.time_freeAt
@@ -52,7 +52,7 @@ export class PaymentController {
 
     @Put() // update after payment
     async updatePayment(@Body() payment: PaymentDto, @Body() transaction: Cameras) {
-        let transactions: Transaction = await this.transactionService.findTransactionbyLicense(transaction.car_license)
+        let transactions: Transaction = await this.transactionService.findTransactionbyLicenseV2(transaction.car_license)
         let parking = await this.parkingService.findParkingByGate(transactions.gate_nameIn)
         let timeLimit: number = parking.parking_timeLimit
         

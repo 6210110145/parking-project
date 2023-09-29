@@ -26,19 +26,18 @@ export class TransactionController {
         //let gate: Gate = await this.gateService.findGateByName(transactionDto.gate_name)
         let gate: Gate = await this.gateService.findGateByName(gateName)
         let parking: Parking = await this.parkingService.findParkingByGate(gateName)
-        let transaction: Transaction = await this.transactionService.findTransactionbyLicense(transactionDto.car_license)
-        let timeLimit: number = parking.parking_timeLimit // เวลาจอดที่ออกจากลานแล้วไม่เสียตังค์
-        let timeIn: Date = new Date()
-        let timeOutFree = new Date(timeIn.getTime() + (timeLimit * 60000))  // + n minutes
-        /*console.log(parking.parking_name)
-        console.log(gate.gate_type)
-        console.log(parking.parking_name)
-        console.log(parking.parking_timeLimit)*/
         
         if (gate.gate_type == "in") { 
-            if((transaction == null) || 
-               (transaction != null && transaction.time_out != null)) { //เข้าได้เมื่อ ไม่มีข้อมูลใน transaction หรือมีแต่ออกจากที่จอดรถแล้ว
+            let transaction: Transaction = await this.transactionService.findTransactionbyLicenseV2(transactionDto.car_license)
+            let timeLimit: number = parking.parking_timeLimit // เวลาจอดที่ออกจากลานแล้วไม่เสียตังค์
+            let timeIn: Date = new Date()
+            let timeOutFree = new Date(timeIn.getTime() + (timeLimit * 60000))  // + n minutes       
+        
+            if((transaction == null) // เข้าครั้งแรก => ไม่มีข้อมูลใน transaction
+                //|| (transaction != null && transaction.time_out != null) หรือมีแต่ออกจากที่จอดรถแล้ว
+                ) {
                 let newTransaction: Transaction = new Transaction()
+
                 newTransaction.gate_nameIn = gate.gate_name
                 newTransaction.car_license = transactionDto.car_license
                 newTransaction.car_province = transactionDto.car_province
@@ -59,29 +58,20 @@ export class TransactionController {
         }
         if(gate.gate_type == 'out') {
             let timeCurrent: Date = new Date()
-            let timeFree: Date = transaction.time_freeAt
-            let payment: Payment = await this.paymentService.findPaymentByLicense(transactionDto.car_license)
-            if((transaction != null) && (timeCurrent.valueOf() < timeFree.valueOf())){ // ออกได้ ถ้าไม่เกินเวลาออกฟรี และ
+            let transactionOut: Transaction = await this.transactionService.findTransactionbyLicenseV2(transactionDto.car_license)
+            let timeFree: Date = transactionOut.time_freeAt
+
+            if(timeCurrent.valueOf() < timeFree.valueOf()) { // ออกได้ ถ้าไม่เกินเวลาออกฟรี payment_total == 0 ไม่มีผล
                 await this.transactionService.updateTransactionOut(
                     transactionDto.car_license,
                     gate.gate_name,
-                    transaction.time_in)
+                    transactionOut.time_in)
                     
                 return {
                     test: true
                 }
-            }/*else if(payment.payment_total == 0) {
-                await this.transactionService.updateTransactionOut(
-                    transactionDto.car_license,
-                    gate.gate_name,
-                    transaction.time_in)
-                    
-                return {
-                    test: true,
-                    Text: "Pass"
-                }
-            }*/else {
-                return "Something is wrong"
+            }else {
+                return `Something is wrong \n ${transactionDto.car_license} may not pay`
             }
         }
     }
@@ -109,6 +99,11 @@ export class TransactionController {
     @Get(':car_license')
     async findTransaction(@Param('car_license') license: string) {
         return await this.transactionService.findTransactionbyLicenseV2(license)
+    }
+
+    @Get('license/:car_license')
+    async findTransactionBylicense(@Param('car_license') license: string) {
+        return await this.transactionService.findAllTransactionbyLicense(license)
     }
 }
 

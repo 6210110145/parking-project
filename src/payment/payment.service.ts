@@ -24,7 +24,8 @@ export class PaymentService {
         return this.paymenstRepository.findOne({
             where: {
                 transaction: {
-                    car_license: license
+                    car_license: license,
+                    gate_nameOut: "null"
                 }
             }
         })
@@ -32,7 +33,7 @@ export class PaymentService {
 
     async showPayment(license: string) {
         let payment = await this.findPaymentByLicense(license)
-        let transaction: Transaction = await this.transactionService.findTransactionbyLicense(license)
+        let transaction: Transaction = await this.transactionService.findTransactionbyLicenseV2(license)
         return {
             "license": transaction.car_license,
             "province" : transaction.car_province,
