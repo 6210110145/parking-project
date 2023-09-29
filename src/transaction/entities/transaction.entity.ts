@@ -44,7 +44,7 @@ export class Transaction extends BaseEntity {
 
     @Column({
         name: 'time_in',
-        //type: 'timestamp without time zone',
+        type: 'timestamp without time zone',
         nullable: true
     })
     time_in: Date
@@ -69,7 +69,7 @@ export class Transaction extends BaseEntity {
 
     @Column({
         name: 'time_out',
-        //type: 'timestamp without time zone',
+        type: 'timestamp without time zone',
         nullable: true
     })
     time_out: Date

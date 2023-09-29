@@ -23,7 +23,8 @@ export class TransactionService {
     async findTransactionById(transactionId: number) {
         return await this.transactionRepository.findOne({
             where: { 
-                transaction_id: transactionId
+                transaction_id: transactionId,
+                gate_nameOut: "null"
             },
             relations: {
                 payments: true
@@ -41,7 +42,10 @@ export class TransactionService {
     async findAllTransactionbyLicense(license: string) {
         return await this.transactionRepository.find({
             where: {
-                car_license: license,}
+                car_license: license},
+            relations: {
+                payments: true
+            }
         })
     }
 
@@ -95,7 +99,7 @@ export class TransactionService {
 
         transactionOut.gate_nameOut = gateName
         transactionOut.time_out = timeOut
-        transactionOut.time_total = timeTotal
+        transactionOut.time_total = Math.ceil(timeTotal)
 
         return await this.transactionRepository.save(transactionOut)
     }

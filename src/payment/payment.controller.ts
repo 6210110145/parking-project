@@ -29,12 +29,12 @@ export class PaymentController {
         let payTotal: number = 0
         
         let timeToatal:number = await this.transactionService.updateTransactionTime(license, timeIn)
-        if(timeCurrent.valueOf() > timeFree.valueOf()) {
+        if(timeCurrent.valueOf() > timeFree.valueOf()) { // เกินเวลาออกฟรี อัพเดต payment
             console.log(timeToatal)
-            if(payment.payment_type == "null") {
+            if(payment.payment_type == "null") {  // ยังไม่จ่าย
                 payTotal = ((timeToatal * cost) / timeLimit)                                        // **ขึ้นอยู่กับแต่ละลาน**
                 return await this.paymentService.updatePaymentCost(license, Math.ceil(payTotal))
-            }else {
+            }else { // จ่ายแล้วยังไม่ออก
                 let newPaymentTime: Date = payment.payment_time
                 let newTimeTotal: number = ((timeCurrent.valueOf() - newPaymentTime.valueOf()) / 60000)  
                 payTotal = ((newTimeTotal * cost) / timeLimit)                                      // **ขึ้นอยู่กับแต่ละลาน**
