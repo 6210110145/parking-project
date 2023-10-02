@@ -17,32 +17,40 @@ export class PaymentController {
     @Get(':car_license') //update cost_totall
     async updatePaymentCost(@Param('car_license') license: string) {
         let payment: Payment = await this.paymentService.findPaymentByLicense(license)
-        let transaction: Transaction = await this.transactionService.findTransactionbyLicenseV2(license)
-        let timeCurrent: Date = new Date()
-        let timeIn: Date = transaction.time_in
-        let timeFree: Date = transaction.time_freeAt
-        
-        let parking = await this.parkingService.findParkingByGate(transaction.gate_nameIn)
-        let cost: number = parking.parking_costpermi // 50 บาท/ 30 นาที
-        let timeLimit: number = parking.parking_timeLimit // 30 นาที
+        let transaction: Transaction = await this.transactionService.findTransactionbyLicenseV2(license) 
 
-        let payTotal: number = 0
-        
-        let timeToatal:number = await this.transactionService.updateTransactionTime(license, timeIn)
-        if(timeCurrent.valueOf() > timeFree.valueOf()) { // เกินเวลาออกฟรี อัพเดต payment
-            console.log(timeToatal)
-            if(payment.payment_type == "null") {  // ยังไม่จ่าย
-                payTotal = ((timeToatal * cost) / timeLimit)                                        // **ขึ้นอยู่กับแต่ละลาน**
-                return await this.paymentService.updatePaymentCost(license, Math.ceil(payTotal))
-            }else { // จ่ายแล้วยังไม่ออก
-                let newPaymentTime: Date = payment.payment_time
-                let newTimeTotal: number = ((timeCurrent.valueOf() - newPaymentTime.valueOf()) / 60000)  
-                payTotal = ((newTimeTotal * cost) / timeLimit)                                      // **ขึ้นอยู่กับแต่ละลาน**
-                return await this.paymentService.updatePaymentCostRepeat(license, Math.ceil(payTotal))
+        if (transaction == null) {
+            return{
+                "license": license,
+                Text: " is not parking"
             }
         }else {
-            return await this.paymentService.updatePaymentCost(license, 0)
-        }        
+            let timeCurrent: Date = new Date()
+            let timeIn: Date = transaction.time_in
+            let timeFree: Date = transaction.time_freeAt
+            
+            let parking = await this.parkingService.findParkingByGate(transaction.gate_nameIn)
+            let cost: number = parking.parking_costpermi // 50 บาท/ 30 นาที
+            let timeLimit: number = parking.parking_timeLimit // 30 นาที
+
+            let payTotal: number = 0
+
+            let timeToatal:number = await this.transactionService.updateTransactionTime(license, timeIn)
+            if(timeCurrent.valueOf() > timeFree.valueOf()) { // เกินเวลาออกฟรี อัพเดต payment
+                console.log(timeToatal)
+                if(payment.payment_type == "null") {  // ยังไม่จ่าย
+                    payTotal = ((timeToatal * cost) / timeLimit)                                        // **ขึ้นอยู่กับแต่ละลาน**
+                    return await this.paymentService.updatePaymentCost(license, Math.ceil(payTotal))
+                }else { // จ่ายแล้วยังไม่ออก
+                    let newPaymentTime: Date = payment.payment_time
+                    let newTimeTotal: number = ((timeCurrent.valueOf() - newPaymentTime.valueOf()) / 60000)  
+                    payTotal = ((newTimeTotal * cost) / timeLimit)                                      // **ขึ้นอยู่กับแต่ละลาน**
+                    return await this.paymentService.updatePaymentCostRepeat(license, Math.ceil(payTotal))
+                }
+            }else {
+                return await this.paymentService.updatePaymentCost(license, 0)
+            } 
+        }       
     }
 
     @Get('/pay/:car_license')
