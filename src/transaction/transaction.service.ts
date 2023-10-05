@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Transaction } from './entities/transaction.entity';
-import { Repository} from 'typeorm';
+import { IsNull, Not, Repository} from 'typeorm';
 import { TransactionDto } from './transaction.dto/create-transaction.dto';
 
 @Injectable()
@@ -42,7 +42,8 @@ export class TransactionService {
     async findAllTransactionbyLicense(license: string) {
         return await this.transactionRepository.find({
             where: {
-                car_license: license},
+                car_license: license,
+                time_out: Not(IsNull())},
             relations: {
                 payments: true
             }
@@ -56,28 +57,16 @@ export class TransactionService {
         })
     }
 
-    /*async showTransactionByLicense(license: string) {
+    async findOnceTransactionbyLicenseV2(license: string) {
         return await this.transactionRepository.findOne({
             where: {
-                car_license: license
-            },
-            select: {
-                car_license: true,
-                car_province: true,
-                parking_name: true,
-                time_in: true,
-                time_total: true,
-                payments: {
-                    payment_total: true,
-                    payment_type: true,
-                    payment_time: true
-                }
-            },
+                car_license: license,
+                gate_nameOut: "null"},
             relations: {
                 payments: true
             }
         })
-    }*/
+    }
 
     //update time_out_free after payment
     async updateTimeFreeAt(license: string, timeLimit: number) {

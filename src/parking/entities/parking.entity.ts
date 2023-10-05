@@ -43,7 +43,14 @@ export class Parking extends BaseEntity{
         nullable: false
     })
     parking_timeLimit: number
-
+    /*
+    @Column({
+        name: 'maxCost',
+        type: "integer",
+        nullable: false
+    })
+    parking_costLimit: number
+    */
     @CreateDateColumn()
     createat: Date
 

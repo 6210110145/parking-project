@@ -61,7 +61,7 @@ export class TransactionController {
             let transactionOut: Transaction = await this.transactionService.findTransactionbyLicenseV2(transactionDto.car_license)
             let timeFree: Date = transactionOut.time_freeAt
 
-            if(timeCurrent.valueOf() < timeFree.valueOf()) { // ออกได้ ถ้าไม่เกินเวลาออกฟรี payment_total == 0 ไม่มีผล
+            if(timeCurrent.valueOf() < timeFree.valueOf()) { // ออกได้ ถ้าไม่เกินเวลาออกฟรี
                 await this.transactionService.updateTransactionOut(
                     transactionDto.car_license,
                     gate.gate_name,
@@ -86,15 +86,6 @@ export class TransactionController {
     async findTransactionByID(@Param('transaction_id') id: number) {
         return await this.transactionService.findTransactionById(id)
     }
-    /*
-    @Get(":car_license")
-    async findTransactionByLicense(@Param('car_license') license: string,
-                                   //@Body() transactionDto: Cameras
-                                   ) {
-        let transaction: Transaction = await this.transactionService.findTransactionbyLicense(license)
-        let timeIn:Date = transaction.time_in
-        return await this.transactionService.updateTransactionTime(license, timeIn)
-    }*/
 
     @Get(':car_license')
     async findTransaction(@Param('car_license') license: string) {
@@ -104,6 +95,11 @@ export class TransactionController {
     @Get('license/:car_license')
     async findTransactionBylicense(@Param('car_license') license: string) {
         return await this.transactionService.findAllTransactionbyLicense(license)
+    }
+
+    @Get('payment/:car_license')
+    async showTransactionBylicense(@Param('car_license') license: string) {
+        return await this.transactionService.findOnceTransactionbyLicenseV2(license)
     }
 }
 
